@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Player_Attack : MonoBehaviour
 {
+    public static Player_Attack instance;
     private Animator anim;
     private float countdown = 0.8f;
     private float timer;
@@ -15,6 +16,10 @@ public class Player_Attack : MonoBehaviour
     [SerializeField] private GameObject skillController;
     private void Start()
     {
+        if (instance == null)
+        {
+            instance = this;
+        }
         anim = GetComponentInChildren<Animator>();
         damage = PlayerHealth.instance.playerIndex.damage;
         skillController = GameObject.Find("Skill_Total");

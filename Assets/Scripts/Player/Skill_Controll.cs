@@ -7,6 +7,8 @@ public class Skill_Controll : MonoBehaviour
 {
     [SerializeField] private Player_Index playerIndex;
 
+    [Header("Attack")]
+    private Player_Attack playerAttack;
 
     [Header("Skill 1")]
     [SerializeField] private GameObject skill1Prefab;
@@ -29,7 +31,10 @@ public class Skill_Controll : MonoBehaviour
 
     private void Start()
     {
-        //Skill 1--
+        //--Attack--
+        playerAttack = GetComponent<Player_Attack>();
+        playerAttack = Player_Attack.instance;
+        //--Skill 1--
         skill1Prefab = GameObject.Find("Skill1");
         button_Skill1 = GameObject.Find("Skill1_Button").GetComponent<Button>();
         cancleSkill1 = GameObject.Find("Skill1_Cancle").GetComponent<Image>();
@@ -56,6 +61,10 @@ public class Skill_Controll : MonoBehaviour
         skill3Prefab.SetActive(false);
         button_Skill3.interactable = true;
         timeCoolDownSkill3 = playerIndex.timeSkill3;
+    }
+    public void PlayerAttack()
+    {
+        playerAttack.PlayerAttack();
     }
     public void ActiveSkill1()
     {
