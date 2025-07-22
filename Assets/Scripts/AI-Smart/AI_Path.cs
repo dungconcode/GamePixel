@@ -20,6 +20,13 @@ public class AI_Path : MonoBehaviour
     [Header("Moving")]
     public bool isMoving = false; // Biến này có thể dùng để kiểm soát trạng thái di chuyển của AI
 
+    [Header("Patrol Points")]
+    [SerializeField] private Transform patrolPoint;
+    private Vector2 targetPatrol;
+    private float patrolRange = 3f;
+    private bool hasPatrolPoint = false;
+    private float coutTime = 0.2f; // Thời gian đợi trước khi di chuyển đến điểm tuần tra mới
+
     private void Awake()
     {
         if (Instance == null)
@@ -38,7 +45,11 @@ public class AI_Path : MonoBehaviour
     {
         if (player == null) return;
         AIPathFinding();
-        
+        if (agent.velocity.x < 0.1f && agent.velocity.x > -0.1f) return;
+        if (agent.velocity.x < 0)
+            transform.localScale = new Vector3(-1, 1, 1); // Quay trái
+        else
+            transform.localScale = new Vector3(1, 1, 1); // Quay phải
     }
     private void AIPathFinding()
     {
@@ -51,13 +62,50 @@ public class AI_Path : MonoBehaviour
             // Player đang trong tầm nhìn rõ ràng
             agent.SetDestination(player.position);
             isMoving = true;
-
+            hasPatrolPoint = true;
         }
         else
         {
-            // Nếu muốn enemy đứng yên hoặc roam thêm, xử lý ở đây
-            agent.ResetPath();
             isMoving = false;
+            agent.ResetPath(); // Reset đường đi của agent
+            hasPatrolPoint = false;
+            PatrolLogic();
+
         }
+    }
+    private void EnemyPatrolPoint()
+    {
+        Vector2 centre = (Vector2)patrolPoint.position;
+        targetPatrol = centre + Random.insideUnitCircle * patrolRange;
+    }
+    private void PatrolLogic()
+    {
+        if (!isMoving)
+        {
+            if (coutTime > 0f)
+            {
+                coutTime -= Time.deltaTime;
+                agent.ResetPath();
+                return;
+            }
+            isMoving = true;
+            if (!hasPatrolPoint)
+            {
+                Debug.Log("Tạo điểm tuần tra mới");
+                agent.SetDestination(targetPatrol);
+                if (Vector2.Distance(transform.position, targetPatrol) < 0.2f)
+                {
+                    EnemyPatrolPoint(); // Tạo điểm tuần tra mới
+                    coutTime = 5f; // Reset thời gian đợi
+                }
+            }
+        }
+    }
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(patrolPoint.position, sightRange);
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireSphere(targetPatrol, patrolRange);
     }
 }

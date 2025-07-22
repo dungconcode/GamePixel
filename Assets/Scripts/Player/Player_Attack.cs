@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player_Attack : MonoBehaviour
+public class Player_Attack : MonoBehaviour, IAttackable
 {
     public static Player_Attack instance;
     private Animator anim;
@@ -41,6 +41,10 @@ public class Player_Attack : MonoBehaviour
     public void FinishSkill2()
     {
         anim.SetBool("isSkill2Active", false);
+    }
+    public void Attack()
+    {
+        PlayerAttack();
     }
     public void PlayerAttack()
     {

@@ -15,11 +15,16 @@ public class Skill_AirKnight : MonoBehaviour
     }
     IEnumerator WaitForNextSkill(float timetoDelay)
     {
+        Debug.Log("Air Knight Skill Activated");
         isShooting = true;
         GameObject airKnight = Instantiate(skillPrefab, actionPoint.position, actionPoint.rotation);
         Rigidbody2D rb = airKnight.GetComponent<Rigidbody2D>();
         rb.AddForce(actionPoint.right * speed, ForceMode2D.Impulse);
         yield return new WaitForSeconds(timetoDelay);
         isShooting = false;
+    }
+    private void OnDisable()
+    {
+        isShooting = false; // Reset shooting state when skill is disabled
     }
 }

@@ -5,22 +5,35 @@ using UnityEngine;
 
 public class Player_Controller : MonoBehaviour
 {
+    public static Player_Controller Instance { get; private set; }
     private Rigidbody2D rb;
     private Animator anim;
     [SerializeField]private Joystick joystick;
     public float speed;
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this; // Set the singleton instance
+        }
+        else
+        {
+            Destroy(gameObject); // Ensure only one instance exists
+        }
+    }
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
+        joystick = GameObject.Find("Variable Joystick").GetComponent<Joystick>();
         speed = PlayerHealth.instance.playerIndex.speed;
     }
     private void FixedUpdate()
     {
         float horizontal = Input.GetAxis("Horizontal");
         float vertical = Input.GetAxis("Vertical");
-        //horizontal = joystick.Horizontal;
-        //vertical = joystick.Vertical;
+       // horizontal = joystick.Horizontal;
+       // vertical = joystick.Vertical;
         Animation();
         if (horizontal > 0 && transform.localScale.x < 0 || horizontal < 0 && transform.localScale.x > 0)
         {

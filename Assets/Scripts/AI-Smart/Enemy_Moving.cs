@@ -1,12 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class Enemy_Moving : MonoBehaviour
 {
     private AI_Path aiPath;
     private Transform player;
     private Animator anim;
+
 
     private int facingDirection = 1; // 1: phải, -1: trái
 
@@ -25,7 +27,7 @@ public class Enemy_Moving : MonoBehaviour
         if (aiPath.isMoving)
         {
             anim.SetBool("isMoving", true);
-            Flip();
+            //Flip();
         }
         else
         {

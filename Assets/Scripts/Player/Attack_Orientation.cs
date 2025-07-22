@@ -4,7 +4,10 @@ using UnityEngine;
 public class Attack_Orientation: MonoBehaviour
 {
     [SerializeField] private Rigidbody2D rb;
-
+    private void Start()
+    {
+        rb = GameObject.Find("Player").GetComponent<Rigidbody2D>();
+    }
     private void Update()
     {
         Vector2 moveDir = rb.velocity;

@@ -18,7 +18,12 @@ public class Enemy_Controller : MonoBehaviour
     private Animator anim;
     private void Start()
     {
-        player = GameObject.FindGameObjectWithTag("Player").transform;
+        if (Player_Controller.Instance != null)
+        {
+            player = Player_Controller.Instance.transform;
+        }
+
+
         if (enemyIndex != null)
         {
             speed = enemyIndex.speed;

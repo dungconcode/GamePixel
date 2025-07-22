@@ -20,6 +20,7 @@ public class Enemy_Health : MonoBehaviour
     }
     private void Die()
     {
+        EnemySpawn.Instance.EnemyDied(gameObject); // Notify the EnemySpawn to remove this enemy
         gameObject.SetActive(false); // Deactivate the enemy object
     }
 }
