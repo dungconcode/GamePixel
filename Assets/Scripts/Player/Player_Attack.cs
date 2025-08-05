@@ -31,17 +31,6 @@ public class Player_Attack : MonoBehaviour, IAttackable
             timer -= Time.deltaTime;
         }
     }
-    public void Skill2Attack()
-    {
-        if (skillController != null)
-        {
-            skillController.GetComponent<Skill_Controll>().ActiveSkill2();
-        }
-    }
-    public void FinishSkill2()
-    {
-        anim.SetBool("isSkill2Active", false);
-    }
     public void Attack()
     {
         PlayerAttack();
@@ -56,10 +45,14 @@ public class Player_Attack : MonoBehaviour, IAttackable
     }
     public void DamageEnemy()
     {
-        Collider2D[] hitenemy = Physics2D.OverlapCircleAll(attackPoint.transform.position, 0.5f, enemyLayerMask);
-        if(hitenemy.Length > 0)
+        Collider2D[] hitenemy = Physics2D.OverlapCircleAll(attackPoint.transform.position, radius, enemyLayerMask);
+        foreach (Collider2D enemy in hitenemy)
         {
-            hitenemy[0].GetComponent<Enemy_Health>().TakeDamage(damage);
+            Enemy_Health enemyHealth = enemy.GetComponent<Enemy_Health>();
+            if (enemyHealth != null)
+            {
+                enemyHealth.TakeDamage(damage);
+            }
         }
     }
     public void FinishAttack()

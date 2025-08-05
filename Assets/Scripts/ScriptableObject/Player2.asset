@@ -17,6 +17,6 @@ MonoBehaviour:
   mana: 250
   damage: 4
   speed: 5
-  timeSkill1: 0
-  timeSkill2: 0
-  timeSkill3: 0
+  timeSkill1: 3
+  timeSkill2: 5
+  timeSkill3: 5

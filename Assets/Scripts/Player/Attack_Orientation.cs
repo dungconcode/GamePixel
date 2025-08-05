@@ -16,13 +16,10 @@ public class Attack_Orientation: MonoBehaviour
         {
             RotateTowardsMovement(moveDir);
         }
-        if(moveDir.x > 0)
-        {
+        if (moveDir.x > 0)
             transform.localScale = new Vector3(1, 1, 1);
-        }else if(moveDir.x < 0)
-        {
-            transform.localScale = new Vector3(-1, 1, 1);
-        }
+        else if (moveDir.x < 0)
+            transform.localScale = new Vector3(-1, -1, 1);
     }
 
     void RotateTowardsMovement(Vector2 moveDirection)

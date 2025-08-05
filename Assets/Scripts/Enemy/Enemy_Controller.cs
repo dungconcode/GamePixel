@@ -58,24 +58,18 @@ public class Enemy_Controller : MonoBehaviour
         RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, distance, obstacleLayer);
         return hit.collider != null;
     }
-    private void OnTriggerEnter2D(Collider2D collision)
+    public void OnPlayerDetected(Transform playerTransform)
     {
-        if (collision.CompareTag("Player"))
-        {
-            if (player == null)
-            {
-                player = collision.transform;
-            }
-            isMoving = true;
-        }
+        if (player == null)
+            player = playerTransform;
+
+        isMoving = true;
     }
-    private void OnTriggerExit2D(Collider2D collision)
+
+    public void OnPlayerLost()
     {
-        if (collision.CompareTag("Player"))
-        {
-            isMoving = false;
-            rb.velocity = Vector2.zero;
-        }
+        isMoving = false;
+        rb.velocity = Vector2.zero;
     }
     private void Flip()
     {

@@ -2,12 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Skill_AirKnight : MonoBehaviour
+public class Skill_AirKnight : SkillBase
 {
     [SerializeField] private Transform actionPoint;
     [SerializeField] private GameObject skillPrefab;
     public float speed;
     [SerializeField] private bool isShooting = false;
+    [SerializeField] private Animator skill2Animator;
+
+    private void Start()
+    {
+        skill2Animator = GameObject.Find("Player").GetComponent<Animator>();
+    }
+    public override void Activate()
+    {
+        skill2Animator.SetBool("isSkill2Active", true);
+    }
     public void ActiveSkill(float timeToDelaySkill)
     {
         if(isShooting) return; // Prevent multiple shots at the same time

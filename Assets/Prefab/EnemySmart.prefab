@@ -16,6 +16,8 @@ GameObject:
   - component: {fileID: 5302955962097934481}
   - component: {fileID: 249604329619756185}
   - component: {fileID: 5697384235644742173}
+  - component: {fileID: 2967259143809685295}
+  - component: {fileID: 542252647016941980}
   m_Layer: 6
   m_Name: EnemySmart
   m_TagString: Enemy
@@ -188,7 +190,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   isMoving: 0
-  patrolPoint: {fileID: 0}
+  hasPatrolPoint: 0
 --- !u!114 &249604329619756185
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -228,3 +230,30 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!114 &2967259143809685295
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6417320644431930897}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52d8f8dc08a85394293103522200ba68, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  curentHealth: 5
+  maxHealth: 5
+--- !u!114 &542252647016941980
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6417320644431930897}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f51b4554a66be5419819b5d32ad68cd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  patrolPoint: {x: 0, y: 0}

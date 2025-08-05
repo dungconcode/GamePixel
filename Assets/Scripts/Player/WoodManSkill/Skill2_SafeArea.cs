@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Skill2_SafeArea : MonoBehaviour
+public class Skill2_SafeArea : SkillBase
 {
     [SerializeField] private float forcwe = 5f;
     [SerializeField] private CircleCollider2D circleCollider2D;
@@ -19,6 +19,10 @@ public class Skill2_SafeArea : MonoBehaviour
             circleCollider2D.enabled = false;
             circleCollider2D.radius = 0f;
         }
+    }
+    public override void Activate()
+    {
+        ActiveSkill(1f); // Call ActiveSkill with a delay of 2 seconds
     }
     public void ActiveSkill(float timeToDelaySkill)
     {
@@ -74,7 +78,7 @@ public class Skill2_SafeArea : MonoBehaviour
         if (circleCollider2D != null)
         {
             circleCollider2D.enabled = true;
-            StartCoroutine(ExpaindRadius(maxradius,timeToDelay));
+            StartCoroutine(ExpaindRadius(maxradius,0.5f));
             yield return new WaitForSeconds(timeToDelay);
             circleCollider2D.radius = 0f;
             circleCollider2D.enabled = false;

@@ -2,12 +2,22 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Skill3_SeedBullet : MonoBehaviour
+public class Skill3_SeedBullet : SkillBase
 {
     [SerializeField] private Transform actionPoint;
     [SerializeField] private GameObject bulletPrefab;
      public float speed;
     [SerializeField] private bool isShooting = false;
+
+    private Animator skill3Animator;
+    private void Start()
+    {
+        skill3Animator = GameObject.Find("Player").GetComponent<Animator>();
+    }
+    public override void Activate()
+    {
+        skill3Animator.SetBool("isActiveSkill3", true);
+    }
     public void ActiveSkill(float timeToDelaySkill)
     {
         if (isShooting) return; // Prevent multiple shots at the same time

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Skill1_SkyStrike : MonoBehaviour
+public class Skill1_SkyStrike : SkillBase
 {
     public float radius = 4f;
     private float targetEnemy = 4f;
@@ -12,6 +12,10 @@ public class Skill1_SkyStrike : MonoBehaviour
     private void Start()
     {
         radius = 4f; // Set default radius if not set in inspector
+    }
+    public override void Activate()
+    {
+        ActiveSkill();
     }
     public void ActiveSkill()
     {

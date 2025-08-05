@@ -13,6 +13,8 @@ public class EnemySpawn : MonoBehaviour
     private bool isSpawning = false; // Biến để kiểm tra xem đã spawn chưa
     private Coroutine spawnCoroutine;
     public List<GameObject> spawnedEnemies = new List<GameObject>();
+
+    private Coroutine removeCoroutine;
     private void Start()
     {
         if (Instance == null)
@@ -43,17 +45,18 @@ public class EnemySpawn : MonoBehaviour
     }
     public void EnemyDied(GameObject enemy)
     {
-        if(spawnedEnemies.Contains(enemy))
+        if (spawnedEnemies.Contains(enemy))
         {
             spawnedEnemies.Remove(enemy);
-            currentEnemyCount--; // Giảm số lượng enemy đã spawn
+            currentEnemyCount--;
+
             if (currentEnemyCount <= 0)
             {
-                currentEnemyCount = 0; // Đảm bảo không âm
-                StartCoroutine(SpawnNewWave()); // Bắt đầu spawn wave mới nếu không còn enemy nào
-                
+                currentEnemyCount = 0;
+                StartCoroutine(SpawnNewWave()); // sẽ spawn wave mới sau 2s
             }
-            Destroy(enemy); // Xóa enemy khỏi danh sách và hủy đối tượng
+
+            Destroy(enemy);
         }
     }
     private IEnumerator SpawnNewWave()
@@ -84,6 +87,12 @@ public class EnemySpawn : MonoBehaviour
         Vector2 spawnPosition = GetRandomSpawnPosition();
         GameObject enemyPrefab = enemyPrefabs[Random.Range(0, enemyPrefabs.Length)];
         GameObject enemy = Instantiate(enemyPrefab, spawnPosition, Quaternion.identity);
+        enemy.SetActive(true);
+        var enemyAI = enemy.GetComponent<Enemy_Patrol>();
+        if (enemyAI != null)
+        {
+            enemyAI.Initialize(spawnPosition); // Khởi tạo AI với vị trí spawn và vùng di chuyển
+        }
         spawnedEnemies.Add(enemy);
     }
     private Vector2 GetRandomSpawnPosition()
@@ -93,5 +102,31 @@ public class EnemySpawn : MonoBehaviour
         float x = Random.Range(min.x, max.x);
         float y = Random.Range(min.y, max.y);
         return new Vector2(x, y);
+    }
+    public void StartRemoveCoroutineFromOutside(float delay)
+    {
+        if (removeCoroutine != null)
+        {
+            StopCoroutine(removeCoroutine);
+        }
+        else
+        {
+            return;
+        }
+        removeCoroutine = StartCoroutine(RemoveEnemyAfterDelay(delay));
+    }
+    public void CancelRemoveEnemyCoroutine()
+    {
+        if (removeCoroutine != null)
+        {
+            StopCoroutine(removeCoroutine);
+            removeCoroutine = null;
+        }
+    }
+
+    private IEnumerator RemoveEnemyAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        StopSpawnEnemy(); // Xóa enemy
     }
 }

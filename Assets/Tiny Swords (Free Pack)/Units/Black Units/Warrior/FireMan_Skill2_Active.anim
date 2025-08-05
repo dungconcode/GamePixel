@@ -80,14 +80,14 @@ AnimationClip:
   m_HasMotionFloatCurves: 0
   m_Events:
   - time: 0.21666667
-    functionName: Skill2Attack
+    functionName: Skill2Active
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
   - time: 0.33333334
-    functionName: FinishSkill2
+    functionName: DamageEnemy
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0

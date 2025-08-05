@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using UnityEngine;
 
-public class RotateSkill : MonoBehaviour
+public class RotateSkill : SkillBase
 {
     public float rotationSpeed;
     public GameObject prefab; // Prefab to instantiate
@@ -28,6 +28,10 @@ public class RotateSkill : MonoBehaviour
     private void FixedUpdate()
     {
         Follow();
+    }
+    public override void Activate()
+    {
+        ActiveSkill(6f, 2f); // hoặc tuỳ chỉnh theo ý bạn
     }
     public void ActiveSkill(float timeToSpin, float timeToBack)
     {

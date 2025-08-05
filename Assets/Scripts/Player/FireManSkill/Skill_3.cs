@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Skill_3 : MonoBehaviour
+public class Skill_3 : SkillBase
 {
     [SerializeField] private Player_Controller playerController;
     [SerializeField] private Player_Attack playerAttack;
@@ -16,15 +16,9 @@ public class Skill_3 : MonoBehaviour
         GameObject player = GameObject.Find("Player");
         playerAnimator = player.GetComponent<Animator>();
     }
-    private void OnEnable()
+    public override void Activate()
     {
-        playerAnimator.SetLayerWeight(0, 0f);
-        playerAnimator.SetLayerWeight(1, 1f);
-    }
-    private void OnDisable()
-    {
-        playerAnimator.SetLayerWeight(0, 1f);
-        playerAnimator.SetLayerWeight(1, 0f);
+        ActivateSkill(3f); 
     }
     public void ActivateSkill(float timeToDelaySkill)
     {
@@ -34,9 +28,17 @@ public class Skill_3 : MonoBehaviour
     IEnumerator DelayTimeSkill(float timeToDelaySkill)
     {
         isActive = true;
+
+        playerAnimator.SetLayerWeight(0, 0f);
+        playerAnimator.SetLayerWeight(1, 1f);
+
         playerController.speed += speed;
         playerAttack.damage += damage;
         yield return new WaitForSeconds(timeToDelaySkill);
+
+        playerAnimator.SetLayerWeight(0, 1f);
+        playerAnimator.SetLayerWeight(1, 0f);
+
         playerController.speed -= speed;
         playerAttack.damage -= damage;
         isActive = false;
