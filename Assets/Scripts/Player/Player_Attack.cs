@@ -12,8 +12,6 @@ public class Player_Attack : MonoBehaviour, IAttackable
     [SerializeField] private GameObject attackPoint;
     [SerializeField] private LayerMask enemyLayerMask;
     [SerializeField] private float radius = 1f;
-    [Header("Skill2")]
-    [SerializeField] private GameObject skillController;
     private void Start()
     {
         if (instance == null)
@@ -22,7 +20,6 @@ public class Player_Attack : MonoBehaviour, IAttackable
         }
         anim = GetComponentInChildren<Animator>();
         damage = PlayerHealth.instance.playerIndex.damage;
-        skillController = GameObject.Find("Skill_Total");
     }
     private void Update()
     {

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEditor.Tilemaps;
 using UnityEngine;
 
@@ -12,6 +13,11 @@ public class Player_Controller : MonoBehaviour
     public float speed;
     public bool isMoving = false;
     public Vector2 directionPlayer;
+
+    public WeaponBase currentWeapon;
+
+    public float autoAimRadius = 8f;
+    public LayerMask enemyLayer;
 
     private void Awake()
     {
@@ -46,15 +52,39 @@ public class Player_Controller : MonoBehaviour
         //horizontal = joystick.Horizontal;
         //vertical = joystick.Vertical;
         Animation();
-        if (horizontal > 0 && transform.localScale.x < 0 || horizontal < 0 && transform.localScale.x > 0)
+        Collider2D[] enemies = Physics2D.OverlapCircleAll(
+            transform.position,
+            autoAimRadius,
+            enemyLayer
+        );
+        if(enemies.Length > 0)
         {
-            Flip();
+            Transform nearest = enemies
+                    .OrderBy(e => Vector2.Distance(Player_Controller.Instance.transform.position, e.transform.position))
+                    .First()
+                    .transform;
+            Vector2 direction = (nearest.position - transform.position).normalized;
+            Flip(direction.x);
+        }
+        else if (horizontal > 0 && transform.localScale.x < 0 || horizontal < 0 && transform.localScale.x > 0)
+        {
+            Flip(directionPlayer.x);
         }
         rb.velocity = new Vector2(horizontal * speed, vertical * speed);
     }
-    void Flip()
+    public void OnAttackButtonDown()
     {
-        transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
+        if (currentWeapon != null)
+        {
+            currentWeapon.TryAttack();
+        }
+    }
+    void Flip(float dirX)
+    {
+        if (dirX > 0)
+            transform.localScale = new Vector3(1, 1, 1);
+        else if (dirX < 0)
+            transform.localScale = new Vector3(-1, 1, 1);
     }
     void Animation()
     {

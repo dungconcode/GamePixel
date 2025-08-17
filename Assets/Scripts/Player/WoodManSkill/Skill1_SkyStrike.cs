@@ -8,6 +8,8 @@ public class Skill1_SkyStrike : SkillBase
     private float targetEnemy = 4f;
     [SerializeField] private LayerMask enemyLayer;
     [SerializeField] private GameObject effectPrefabs;
+    [SerializeField] private GameObject indicatorPrefabs;
+    public float indicatorDuration = 0.1f;
     public float delayBeforeHit = 0.2f;
     private void Start()
     {
@@ -33,12 +35,14 @@ public class Skill1_SkyStrike : SkillBase
             if (count >= targetEnemy) break;
             if (enemy != null)
             {
+                GameObject indicator = Instantiate(indicatorPrefabs, enemy.transform.position, Quaternion.identity);
+                Destroy(indicator, indicatorDuration); // Destroy indicator after a short duration
+                yield return new WaitForSeconds(indicatorDuration);
                 GameObject efect = Instantiate(effectPrefabs, enemy.transform.position, Quaternion.identity);
-                Destroy(efect, 1f); // Destroy effect after 1 second
+                Destroy(efect, 0.5f); // Destroy effect after 1 second
                 yield return new WaitForSeconds(delayBeforeHit);
                 count++;
             }
-            else Debug.Log("Chạy cụ mày lõi rồi");
         }
     }
     private void OnDrawGizmosSelected()

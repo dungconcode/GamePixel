@@ -12,7 +12,7 @@ public class Skill_AirKnight : SkillBase
 
     private void Start()
     {
-        skill2Animator = GameObject.Find("Player").GetComponent<Animator>();
+       // skill2Animator = GameObject.Find("Player").GetComponent<Animator>();
     }
     public override void Activate()
     {
@@ -20,7 +20,7 @@ public class Skill_AirKnight : SkillBase
     }
     public void ActiveSkill(float timeToDelaySkill)
     {
-        if(isShooting) return; // Prevent multiple shots at the same time
+        if(isShooting) return;
         StartCoroutine(WaitForNextSkill(timeToDelaySkill));
     }
     IEnumerator WaitForNextSkill(float timetoDelay)

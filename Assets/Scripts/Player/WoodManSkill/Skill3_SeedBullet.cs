@@ -12,7 +12,7 @@ public class Skill3_SeedBullet : SkillBase
     private Animator skill3Animator;
     private void Start()
     {
-        skill3Animator = GameObject.Find("Player").GetComponent<Animator>();
+        skill3Animator = GameObject.Find("Bow").GetComponent<Animator>();
     }
     public override void Activate()
     {
@@ -32,8 +32,8 @@ public class Skill3_SeedBullet : SkillBase
         foreach (float angle in angles)
         {
             Quaternion rotation = Quaternion.Euler(0, 0, actionPoint.eulerAngles.z + angle);
-            GameObject airKnight = Instantiate(bulletPrefab, actionPoint.position, rotation);
-            Rigidbody2D rb = airKnight.GetComponent<Rigidbody2D>();
+            GameObject seedBullet = Instantiate(bulletPrefab, actionPoint.position, rotation);
+            Rigidbody2D rb = seedBullet.GetComponent<Rigidbody2D>();
             rb.AddForce(rotation * Vector2.right * speed, ForceMode2D.Impulse);
         }
 

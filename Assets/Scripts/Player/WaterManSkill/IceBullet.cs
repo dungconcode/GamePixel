@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class IceBullet : MonoBehaviour
 {
@@ -10,24 +11,36 @@ public class IceBullet : MonoBehaviour
     {
         if (collision.CompareTag("Enemy"))
         {
-            Debug.Log("Hit Enemy: " + collision.name);
             collision.GetComponent<Enemy_Health>()?.TakeDamage(damage);
-            StartCoroutine(FreezeEnemy(collision.gameObject, 2f));
+            StartCoroutine(FreezeEnemy(collision.gameObject, 1f));
             //Destroy(gameObject);
         }
     }
-    IEnumerator FreezeEnemy(GameObject enemy, float freezeDuration = 2f)
+    IEnumerator FreezeEnemy(GameObject enemy, float freezeDuration = 1f)
     {
         Rigidbody2D rb = enemy.GetComponent<Rigidbody2D>();
         Vector2 originalVelocity = rb ? rb.velocity : Vector2.zero;
         Enemy_Controller controller = enemy.GetComponent<Enemy_Controller>();
-        if(controller != null)
+        AI_Path aiPath = enemy.GetComponent<AI_Path>();
+
+        if (aiPath != null)
+        {
+            aiPath.isFrozen = true;
+        }
+        if (controller != null)
             controller.enabled = false;
-        if(rb != null)
+        
+        
+        if (rb != null)
             rb.velocity = Vector2.zero;
         GameObject ice = null;
         ice = Instantiate(iceEffectPrefab, enemy.transform.position, Quaternion.identity);
+        ice.transform.SetParent(enemy.transform);
         yield return new WaitForSeconds(freezeDuration);
+        if (aiPath != null)
+        {
+            aiPath.isFrozen = false;
+        }
         if (controller != null)
             controller.enabled = true;
         if (rb != null) 

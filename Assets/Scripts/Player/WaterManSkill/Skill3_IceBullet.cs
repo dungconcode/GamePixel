@@ -7,7 +7,7 @@ public class Skill3_IceBullet : SkillBase
     [SerializeField] private GameObject iceBulletPrefab;
     private Transform playerTransform;
     private float bulletSpeed = 10f;
-    public int bulletCount = 8;
+    private int bulletCount = 10;
 
     private void Start()
     {

@@ -8,10 +8,6 @@ public class Enemy_Moving : MonoBehaviour
     private AI_Path aiPath;
     private Transform player;
     private Animator anim;
-
-
-    
-
     void Start()
     {
         aiPath = GetComponent<AI_Path>();

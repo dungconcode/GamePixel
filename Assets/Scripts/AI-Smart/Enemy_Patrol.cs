@@ -10,7 +10,9 @@ public class Enemy_Patrol : MonoBehaviour
     private NavMeshAgent agent;
     private Vector2 targetPatrol;
     private float patrolRange = 3f;
-    private float coutTime = 0.8f;
+    private float coutTime = 2f;
+
+
     // Start is called before the first frame update
     private void Start()
     {
@@ -22,29 +24,7 @@ public class Enemy_Patrol : MonoBehaviour
         patrolPoint = spawnPoint;
         EnemyPatrolPoint(); 
     }
-    public void PatrolLogic()
-    {
-        if (!aiPath.isMoving)
-        {
-            if (coutTime > 0f)
-            {
-                coutTime -= Time.deltaTime;
-                agent.ResetPath();
-                return;
-            }
-            if (!aiPath.hasPatrolPoint)
-            {
-                Debug.Log("Tạo điểm tuần tra mới");
-                aiPath.isMoving = true;
-                agent.SetDestination(targetPatrol);
-                if (Vector2.Distance(transform.position, targetPatrol) < 0.2f)
-                {
-                    EnemyPatrolPoint(); // Tạo điểm tuần tra mới
-                    coutTime = 5f; // Reset thời gian đợi
-                }
-            }
-        }
-    }
+    
     public void PatrolLogic2()
     {
         if (!aiPath.hasPatrolPoint)
@@ -58,12 +38,13 @@ public class Enemy_Patrol : MonoBehaviour
             }
             else
             {
+                
                 aiPath.isMoving = true;
                 agent.SetDestination(targetPatrol);
-                if (Vector2.Distance(transform.position, targetPatrol) < 0.2f)
+                if (Vector2.Distance(transform.position, targetPatrol) < 0.3f)
                 {
                     EnemyPatrolPoint(); // Tạo điểm tuần tra mới
-                    coutTime = 0.8f; // Reset thời gian đợi
+                    coutTime = 2f; // Reset thời gian đợi
                 }
             }
         }

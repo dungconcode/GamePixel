@@ -19,6 +19,9 @@ public class PlayerHealth : MonoBehaviour
     private bool canRengerArmor = true;
     private Coroutine regenArmorCoroutine;
 
+    [Header("Damage Popup")]
+    [SerializeField] private GameObject damagePopupPrefab;
+
     private void Awake()
     {
         instance = this;
@@ -51,6 +54,10 @@ public class PlayerHealth : MonoBehaviour
     public void TakeDamage(int _damage)
     {
         currentArmor -= _damage;
+        Vector3 offset = new Vector3(0, 0.5f, 0);
+        Vector3 randomOffset = new Vector3(Random.Range(-0.6f, 0.5f), Random.Range(-0.1f, 0.3f), 0);
+        GameObject popup = Instantiate(damagePopupPrefab, transform.position + offset + randomOffset, Quaternion.identity);
+        Destroy(popup, 0.5f);
         if (currentArmor < 0)
         {
             currentHealth -= (_damage);

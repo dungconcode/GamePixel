@@ -6,7 +6,7 @@ using UnityEngine;
 public class Bow_Attack : MonoBehaviour
 {
     private Animator anim;
-    private float countdown = 0.8f;
+    private float countdown = 0.5f;
     private float timer;
     public float damage;
     [SerializeField] private GameObject attackPoint;
@@ -29,23 +29,6 @@ public class Bow_Attack : MonoBehaviour
         {
             timer -= Time.deltaTime;
         }
-    }
-    private void HandleAiming()
-    {
-        /*Vector2 inputDir = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
-
-        if (inputDir.sqrMagnitude > 0.01f)
-        {
-            aimDirection = new Vector2(Mathf.Round(inputDir.x), Mathf.Round(inputDir.y)).normalized;
-        }
-        else
-        {
-            Vector2 fallbackDir = attackPoint.transform.right.normalized;
-            aimDirection = new Vector2(
-                Mathf.Round(fallbackDir.x),
-                Mathf.Round(fallbackDir.y)
-            );
-        }*/
     }
     public void Attack()
     {
