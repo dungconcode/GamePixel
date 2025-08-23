@@ -1095,6 +1095,7 @@ MonoBehaviour:
   icon: {fileID: 0}
   forcwe: 150
   circleCollider2D: {fileID: 0}
+  safeAreaPrefab: {fileID: 0}
   maxradius: 4
 --- !u!1 &6213239374536532713
 GameObject:
@@ -1529,6 +1530,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83b7fd9b29b0063419392d82bec42db8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  weaponName: Staff Magic
+  weaponType: 2
+  weaponPrefab: {fileID: 0}
   fireRate: 1
   attackPoint: {fileID: 8040105800861306535}
   enemyLayerMask:
@@ -1731,6 +1735,7 @@ GameObject:
   - component: {fileID: 633193552850966115}
   - component: {fileID: 3385666592199194515}
   - component: {fileID: 2237420662988290929}
+  - component: {fileID: 2375324242511922340}
   m_Layer: 10
   m_Name: Player
   m_TagString: Player
@@ -1830,7 +1835,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67438a2ccfc7e51428ca7156e180a6f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerIndex: {fileID: 11400000, guid: 7eac029b7f9aa6a499feecfa49b9c3e7, type: 2}
+  playerIndex: {fileID: 11400000, guid: b5481813125ffb6418b3f5b884d3e3ea, type: 2}
+  update: {fileID: 0}
   maxHealth: 4
   currentHealth: 4
   maxArmor: 3
@@ -1852,7 +1858,7 @@ MonoBehaviour:
   speed: 0
   isMoving: 0
   directionPlayer: {x: 0, y: 0}
-  currentWeapon: {fileID: 2226743363553846099}
+  weaponManager: {fileID: 0}
   autoAimRadius: 8
   enemyLayer:
     serializedVersion: 2
@@ -1930,6 +1936,19 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &2375324242511922340
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7947703455394458839}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0468e14f06d5eae4981d4ecbcf415ea3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  characterSO: {fileID: 11400000, guid: b5481813125ffb6418b3f5b884d3e3ea, type: 2}
 --- !u!1 &8040105800861306535
 GameObject:
   m_ObjectHideFlags: 0

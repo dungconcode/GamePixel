@@ -14,7 +14,7 @@ public class Player_Controller : MonoBehaviour
     public bool isMoving = false;
     public Vector2 directionPlayer;
 
-    public WeaponBase currentWeapon;
+    public WeaponManager weaponManager;
 
     public float autoAimRadius = 8f;
     public LayerMask enemyLayer;
@@ -74,9 +74,16 @@ public class Player_Controller : MonoBehaviour
     }
     public void OnAttackButtonDown()
     {
-        if (currentWeapon != null)
+        if (weaponManager != null)
         {
-            currentWeapon.TryAttack();
+            weaponManager.currentWeapon.TryAttack();
+        }
+    }
+    public void OnSwitchWeapon()
+    {
+        if (weaponManager != null)
+        {
+            weaponManager.ChangeWeapon();
         }
     }
     void Flip(float dirX)

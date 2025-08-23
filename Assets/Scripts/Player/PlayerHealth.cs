@@ -3,12 +3,18 @@ using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.PlayerLoop;
 using UnityEngine.UI;
 
 public class PlayerHealth : MonoBehaviour
 {
     public static PlayerHealth instance;
-    public Player_Index playerIndex; // Assuming you have a Player_Index scriptable object to manage player stats
+    public Player_Index playerIndex;
+
+    [Header("Reference")]
+    public UpdateController update;
+    //public CharacterStarts characterStarts;
+
     [Header("Health")]
     public int maxHealth;
     public int currentHealth;
@@ -28,16 +34,23 @@ public class PlayerHealth : MonoBehaviour
     }
     private void Start()
     {
-        maxHealth = (int)playerIndex.hp;
-        currentHealth = maxHealth;
-        maxArmor = (int)playerIndex.armor;
-        currentArmor = maxArmor;
+        update = GetComponent<UpdateController>();
+        LoadIndex();
         StartCoroutine(RegenerateArmor());
+    }
+    public void LoadIndex()
+    {
+        var runtimeData = update.runtimeData;
+        maxHealth = (int)runtimeData.hp;
+        currentHealth = maxHealth;
+        maxArmor = (int)runtimeData.armor;
+        currentArmor = maxArmor;
     }
     IEnumerator RegenerateArmor()
     {
-        maxHealth = (int)playerIndex.hp;
-        maxArmor = (int)playerIndex.armor;
+        var runtimeData = update.runtimeData;
+        maxHealth = (int)runtimeData.hp;
+        maxArmor = (int)runtimeData.armor;
         while (true)
         {
             yield return new WaitForSeconds(1f);

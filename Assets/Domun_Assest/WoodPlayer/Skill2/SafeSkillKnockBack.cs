@@ -2,13 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Skill2_SafeArea : SkillBase
+public class SafeSkillKnockBack : MonoBehaviour
 {
     [SerializeField] private float forcwe = 5f;
     [SerializeField] private CircleCollider2D circleCollider2D;
-    [SerializeField] private GameObject safeAreaPrefab; // Prefab for the safe area
     public float maxradius = 2;
-
     private void Start()
     {
         if (circleCollider2D == null)
@@ -20,35 +18,18 @@ public class Skill2_SafeArea : SkillBase
             circleCollider2D.enabled = false;
             circleCollider2D.radius = 0f;
         }
-        if (safeAreaPrefab == null)
-        {
-            Debug.LogError("Safe Area Prefab is not assigned!");
-        }
-        else
-        {
-            safeAreaPrefab.SetActive(false); // Ensure the prefab is initially inactive
-        }
-    }
-    public override void Activate()
-    {
-        ActiveSkill(1f); // Call ActiveSkill with a delay of 2 seconds
-    }
-    public void ActiveSkill(float timeToDelaySkill)
-    {
-        //StartCoroutine(WaitForNextSkill(timeToDelaySkill));
-        EnableEffect();
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.CompareTag("Enemy"))
+        if (collision.CompareTag("Enemy"))
         {
-            Debug.Log("Enemy entered safe area!");
+           
             Rigidbody2D rb = collision.GetComponent<Rigidbody2D>();
             if (rb != null)
             {
                 Vector2 direction = (collision.transform.position - transform.position).normalized;
                 rb.AddForce(direction * forcwe * Time.deltaTime, ForceMode2D.Impulse);
-                StartCoroutine(KnockBackCounter(rb, 0.5f)); // Knockback duration of 0.5 seconds
+                StartCoroutine(KnockBackCounter(rb, 0.5f));
             }
         }
     }
@@ -60,10 +41,15 @@ public class Skill2_SafeArea : SkillBase
             if (rb != null)
             {
                 Vector2 direction = (collision.transform.position - transform.position).normalized;
-                rb.AddForce(direction * forcwe * Time.deltaTime, ForceMode2D.Impulse); // nhỏ hơn để tránh đẩy quá mạnh
-                StartCoroutine(KnockBackCounter(rb, 0.5f));
+                rb.AddForce(direction * forcwe * Time.deltaTime, ForceMode2D.Impulse);
+                StartCoroutine(KnockBackCounter(rb, 0.5f)); 
             }
         }
+    }
+    IEnumerator KnockBackCounter(Rigidbody2D rb, float duration)
+    {
+        yield return new WaitForSeconds(duration);
+        rb.velocity = Vector2.zero;
     }
     IEnumerator ExpaindRadius(float targetRadius, float duration)
     {
@@ -76,27 +62,26 @@ public class Skill2_SafeArea : SkillBase
             yield return null;
         }
         circleCollider2D.radius = targetRadius;
+        Debug.Log("Radius expanded to: " + circleCollider2D.radius);
     }
-    IEnumerator KnockBackCounter(Rigidbody2D rb,float duration)
-    {
-        yield return new WaitForSeconds(duration);
-        rb.velocity = Vector2.zero;
-    }
-
-    IEnumerator WaitForNextSkill(float timeToDelay)
+    IEnumerator TimeToKnockBack()
     {
         if (circleCollider2D != null)
         {
             circleCollider2D.enabled = true;
-            StartCoroutine(ExpaindRadius(maxradius,0.5f));
-            yield return new WaitForSeconds(timeToDelay);
+            Debug.Log(circleCollider2D.enabled);
+            StartCoroutine(ExpaindRadius(maxradius, 0.5f)); 
+            yield return new WaitForSeconds(1f);
             circleCollider2D.radius = 0f;
             circleCollider2D.enabled = false;
         }
     }
-    private void EnableEffect()
+    public void StartKnockBack()
     {
-        safeAreaPrefab.SetActive(true);
-        GameObject effect = Instantiate(safeAreaPrefab, transform.position, Quaternion.identity, transform);
+        StartCoroutine(TimeToKnockBack());
+    }
+    public void DestroyEffect()
+    {
+        Destroy(gameObject);
     }
 }

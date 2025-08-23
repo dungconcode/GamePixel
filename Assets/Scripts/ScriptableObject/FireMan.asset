@@ -10,13 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 236dc338b0f70114fa1d9b535a51e935, type: 3}
-  m_Name: Player2
+  m_Name: FireMan
   m_EditorClassIdentifier: 
-  hp: 3
+  characterID: Wood
+  hp: 6
   armor: 5
-  mana: 250
-  damage: 4
+  mana: 180
+  damage: 3
   speed: 5
-  timeSkill1: 3
-  timeSkill2: 5
-  timeSkill3: 5
+  timeSkill1: 8
+  timeSkill2: 2.1
+  timeSkill3: 4

@@ -6,8 +6,6 @@ public class PunchAttack : WeaponBase
 {
     [SerializeField] private Animator punch1_anim;
     [SerializeField] private Animator punch2_anim;
-    private float timer;
-    private float punchCooldown = 0.8f; 
     private float delayBetweenPunches = 0.2f;
 
     protected override void Attack()

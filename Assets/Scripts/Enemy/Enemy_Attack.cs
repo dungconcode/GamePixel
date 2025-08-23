@@ -64,7 +64,7 @@ public class Enemy_Attack : MonoBehaviour
         Collider2D[] hitPlayers = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, playerLayer);
         if(hitPlayers.Length > 0)
         {
-            hitPlayers[0].GetComponent<PlayerHealth>().TakeDamage(damage);
+            hitPlayers[0].GetComponent<PlayerHealth>()?.TakeDamage(damage);
         }
     }
     //IEnumerator DelayEnemyAttack()

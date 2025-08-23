@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 4855859273049608115}
   - component: {fileID: 7046908144367489978}
   - component: {fileID: 6754652265206071649}
+  - component: {fileID: 3879388250347765120}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -115,6 +116,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerIndex: {fileID: 11400000, guid: 7eac029b7f9aa6a499feecfa49b9c3e7, type: 2}
+  update: {fileID: 0}
   maxHealth: 4
   currentHealth: 4
   maxArmor: 3
@@ -136,7 +138,11 @@ MonoBehaviour:
   speed: 0
   isMoving: 0
   directionPlayer: {x: 0, y: 0}
-  currentWeapon: {fileID: 5084681322310057950}
+  weaponManager: {fileID: 0}
+  autoAimRadius: 8
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!114 &4855859273049608115
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -228,6 +234,19 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &3879388250347765120
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 160720207466393237}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0468e14f06d5eae4981d4ecbcf415ea3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  characterSO: {fileID: 11400000, guid: 7eac029b7f9aa6a499feecfa49b9c3e7, type: 2}
 --- !u!1 &237400439132063912
 GameObject:
   m_ObjectHideFlags: 0
@@ -889,6 +908,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a328f634786e647468021d81f16e9448, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  weaponName: 
+  weaponType: 0
+  weaponPrefab: {fileID: 0}
   fireRate: 1
   attackPoint: {fileID: 2716828582185394708}
   enemyLayerMask:
@@ -1372,7 +1394,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 19eb15b2518584440b6bd52ac46260a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  autoAimRadius: 8
   enemyLayer:
     serializedVersion: 2
     m_Bits: 64

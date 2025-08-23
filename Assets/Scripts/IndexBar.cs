@@ -49,9 +49,10 @@ public class IndexBar : MonoBehaviour
         }
         if (playerHealth != null)
         {
+            
             health_txt.text = playerHealth.currentHealth.ToString() + "/" + playerHealth.maxHealth.ToString();
             health_bar.fillAmount = (float)playerHealth.currentHealth / playerHealth.maxHealth;
-
+            //Debug.Log("Current Health: " + playerHealth.maxHealth);
             armor_txt.text = playerHealth.currentArmor.ToString() + "/" + playerHealth.maxArmor.ToString();
             armor_bar.fillAmount = (float)playerHealth.currentArmor / playerHealth.maxArmor;
         }

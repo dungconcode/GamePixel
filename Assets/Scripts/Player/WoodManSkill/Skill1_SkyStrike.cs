@@ -9,7 +9,7 @@ public class Skill1_SkyStrike : SkillBase
     [SerializeField] private LayerMask enemyLayer;
     [SerializeField] private GameObject effectPrefabs;
     [SerializeField] private GameObject indicatorPrefabs;
-    public float indicatorDuration = 0.1f;
+    public float indicatorDuration = 0.05f;
     public float delayBeforeHit = 0.2f;
     private void Start()
     {
@@ -38,8 +38,10 @@ public class Skill1_SkyStrike : SkillBase
                 GameObject indicator = Instantiate(indicatorPrefabs, enemy.transform.position, Quaternion.identity);
                 Destroy(indicator, indicatorDuration); // Destroy indicator after a short duration
                 yield return new WaitForSeconds(indicatorDuration);
-                GameObject efect = Instantiate(effectPrefabs, enemy.transform.position, Quaternion.identity);
-                Destroy(efect, 0.5f); // Destroy effect after 1 second
+                Vector3 spawnPos = enemy.transform.position;
+                spawnPos.y += 0.6f;
+
+                GameObject efect = Instantiate(effectPrefabs, spawnPos, Quaternion.identity);
                 yield return new WaitForSeconds(delayBeforeHit);
                 count++;
             }

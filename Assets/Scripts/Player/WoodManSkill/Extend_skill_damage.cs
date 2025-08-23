@@ -17,7 +17,7 @@ public class Extend_skill_damage : MonoBehaviour
             collision.GetComponent<Enemy_Health>()?.TakeDamage(2);
         }
     }
-    public void RockAttackEnable()
+    public void WoodAttackEnable()
     {
         radiusCollision.enabled = true;
     }

@@ -13,7 +13,7 @@ public class AI_Path : MonoBehaviour
     [SerializeField] NavMeshAgent agent;
 
     [Header("Detection")]
-    [SerializeField] private float sightRange = 10f; // tầm nhìn
+    [SerializeField] private float sightRange = 8f; // tầm nhìn
     [SerializeField] private float fieldOfView = 360f;   // góc nhìn
     [SerializeField] private LayerMask obstructionMask;  // vật cản như tường
     [SerializeField] private Transform rotatePoint;
@@ -63,7 +63,6 @@ public class AI_Path : MonoBehaviour
     
     private void AIPathFinding()
     {
-        Flip();
         if (player == null) return; // Nếu không có player, không làm gì cả
         Vector3 dirToPlayer = (player.position - transform.position).normalized;
         bool inFOV = Vector3.Angle(transform.forward, dirToPlayer) < fieldOfView / 2; // góc nhìn Angle không > 120 hoặc 180 
@@ -90,9 +89,16 @@ public class AI_Path : MonoBehaviour
                 Vector3 retreatDir = (transform.position - player.position).normalized; // hướng ngược player
                 Vector3 retreatPos = transform.position + retreatDir * 1.5f; // lùi ra thêm 1.5m
                 agent.SetDestination(retreatPos);
+
+                Vector3 lookDir = (player.position - transform.position).normalized;
+                if (lookDir.x < 0)
+                    transform.localScale = new Vector3(-1, 1, 1); // quay trái
+                else
+                    transform.localScale = new Vector3(1, 1, 1); // quay phải
             }
             else
             {
+                Flip();
                 isEnemyAttacking = false;
                 agent.isStopped = false;
                 isMoving = true;
@@ -105,6 +111,7 @@ public class AI_Path : MonoBehaviour
         else
         {
             agent.ResetPath(); 
+            Flip();
             hasPatrolPoint = false;
             enemyPatrol.PatrolLogic2();
         }
@@ -128,16 +135,16 @@ public class AI_Path : MonoBehaviour
     {
         isEnemyAttacking = true;
         yield return new WaitForSeconds(attackDelay);
-        yield return new WaitForSeconds(attackCooldown); // Thời gian tấn công
-        isEnemyAttacking = false; // Reset trạng thái tấn công sau khi kết thúc
+        yield return new WaitForSeconds(attackCooldown); 
+        isEnemyAttacking = false; 
     }
-    private bool IsObstacleInFront()
-    {
-        Vector2 direction = (player.position - transform.position).normalized;
-        float distance = Vector2.Distance(transform.position, player.position);
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, distance, obstructionMask);
-        return hit.collider != null;
-    }
+    //private bool IsObstacleInFront()
+    //{
+    //    Vector2 direction = (player.position - transform.position).normalized;
+    //    float distance = Vector2.Distance(transform.position, player.position);
+    //    RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, distance, obstructionMask);
+    //    return hit.collider != null;
+    //}
 
     private void OnDrawGizmosSelected()
     {
