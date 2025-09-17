@@ -4,9 +4,9 @@ using UnityEngine;
 
 public enum WeaponType
 {
-    Melee,     // kiếm, dao, cận chiến
-    Chain,    // đấm liên tục
-    Magic    // gậy phép, sách phép
+    Melee = 0,     // kiếm, dao, cận chiến
+    Chain = 1,    // đấm liên tục
+    Magic = 2    // gậy phép, sách phép
 }
 public abstract class WeaponBase : MonoBehaviour
 {

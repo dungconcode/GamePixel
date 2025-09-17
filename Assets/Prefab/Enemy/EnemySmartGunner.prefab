@@ -115,7 +115,7 @@ NavMeshAgent:
   m_Height: 0.9
   m_BaseOffset: 0.5
   m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 4
+  m_ObstacleAvoidanceType: 0
 --- !u!70 &6819800549374320863
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -213,11 +213,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 0}
   agent: {fileID: 2639261514132581761}
-  sightRange: 6
+  sightRange: 8
   fieldOfView: 360
   obstructionMask:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 2176
   rotatePoint: {fileID: 1828318830313182966}
   isMoving: 0
   hasPatrolPoint: 0
@@ -238,9 +238,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52d8f8dc08a85394293103522200ba68, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  curentHealth: 100
-  maxHealth: 100
+  curentHealth: 10
+  maxHealth: 10
   damagePopupPrefab: {fileID: 2925258136817871337, guid: d9357c3bc7dcc9444803aaaae93c5db0, type: 3}
+  enemyHealth: {fileID: 1973618660051989990, guid: 1a0f525c38497b44b974410432c4876f, type: 3}
 --- !u!114 &1129114155563663263
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -254,6 +255,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   patrolPoint: {x: 0, y: 0}
+  targetPatrol: {x: 0, y: 0, z: 0}
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 2176
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 64
+  tmp: 1
+  isEnemyInRoom: 0
 --- !u!114 &1140968049848906523
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -357,6 +367,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyTransforms: {fileID: 0}
   playerTransforms: {fileID: 0}
+  detectionRadius: 7
 --- !u!1 &7422723873860123516
 GameObject:
   m_ObjectHideFlags: 0
@@ -431,7 +442,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 6
+  m_SortingOrder: 5
   m_Sprite: {fileID: 964293412, guid: 35ee1f78438fedb4494e964067337f6f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

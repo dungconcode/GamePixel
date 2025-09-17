@@ -155,3 +155,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5507227d907090646b73ffc9542ed66a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  freezeEffectPrefab: {fileID: 2432616598510860782, guid: 4be80fbfa33bf804ab42d1d76de21741, type: 3}

@@ -4,13 +4,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-
+public interface IEnemyTick
+{
+    void Ontick();
+}
 [RequireComponent(typeof(NavMeshAgent))]
-public class AI_Path : MonoBehaviour
+public class AI_Path : MonoBehaviour, IEnemyTick
 {
     //public static AI_Path Instance { get; private set; }
     public Transform player;
     [SerializeField] NavMeshAgent agent;
+
 
     [Header("Detection")]
     [SerializeField] private float sightRange = 8f; // tầm nhìn
@@ -19,11 +23,10 @@ public class AI_Path : MonoBehaviour
     [SerializeField] private Transform rotatePoint;
 
     [Header("Moving")]
-    public bool isMoving = false; // Biến này có thể dùng để kiểm soát trạng thái di chuyển của AI
+    public bool isMoving = false;
 
     [Header("Patrol Points")]
     public bool hasPatrolPoint = false;
-    private Enemy_Patrol enemyPatrol;
 
     [Header("Frezon")]
     public bool isFrozen = false;
@@ -33,24 +36,33 @@ public class AI_Path : MonoBehaviour
     [SerializeField] private float attackCooldown = 1f; 
     private float lastAttackTime = 0f;
     public bool isEnemyAttacking = false;
-    [SerializeField] private float attackDelay = 0.3f; 
+    [SerializeField] private float attackDelay = 0.3f;
 
     private void Start()
     {
         agent = GetComponent<NavMeshAgent>();
         player = GameObject.FindGameObjectWithTag("Player")?.transform;
-        enemyPatrol = GetComponent<Enemy_Patrol>();
+
         agent.updateRotation = false; // Tắt cập nhật xoay của agent
         agent.updateUpAxis = false; // Tắt cập nhật trục Y của agent
     }
-    private void Update()
+    public void OnEnable()
+    {
+        EnemyManager.Instance.Register(this);
+    }
+    public void OnDisable()
+    {
+        EnemyManager.Instance.Unregister(this);
+    }
+    public void Ontick()
     {
         if (isFrozen)
         {
             agent.ResetPath();
             return;
         }
-        if (player == null)
+        Enemy_Patrol patrol = GetComponent<Enemy_Patrol>();
+        if (player == null || !patrol.isEnemyInRoom)
         {
             agent.ResetPath(); // đứng yên
             isMoving = false;
@@ -58,9 +70,7 @@ public class AI_Path : MonoBehaviour
             return;
         }
         AIPathFinding();
-        
     }
-    
     private void AIPathFinding()
     {
         if (player == null) return; // Nếu không có player, không làm gì cả
@@ -72,22 +82,28 @@ public class AI_Path : MonoBehaviour
         {
             float distanceToPlayer = Vector2.Distance(transform.position, player.position);
 
-            if (Mathf.Abs(distanceToPlayer - attackRange) < 0.4f) // gần bằng attackRange
+            if (Mathf.Abs(distanceToPlayer - attackRange) < 0.4f) 
             {
                 agent.isStopped = true;
                 isMoving = false;
                 if (Time.time - lastAttackTime >= attackCooldown)
                 {
-                    Attack();
-                    lastAttackTime = Time.time;
+                    RaycastHit2D hit = Physics2D.Raycast(transform.position, dirToPlayer, 0.5f, obstructionMask);
+                    Enemy_Patrol patrol = GetComponent<Enemy_Patrol>();
+                    if(patrol.isEnemyInRoom)
+                    {
+                        Attack();
+                        lastAttackTime = Time.time;
+                    }
+                       
                 }
             }
-            else if (distanceToPlayer < attackRange) // quá gần -> lùi ra
+            else if (distanceToPlayer < attackRange) 
             {
                 agent.isStopped = false;
                 isMoving = true;
-                Vector3 retreatDir = (transform.position - player.position).normalized; // hướng ngược player
-                Vector3 retreatPos = transform.position + retreatDir * 1.5f; // lùi ra thêm 1.5m
+                Vector3 retreatDir = (transform.position - player.position).normalized; 
+                Vector3 retreatPos = transform.position + retreatDir * 1.5f; 
                 agent.SetDestination(retreatPos);
 
                 Vector3 lookDir = (player.position - transform.position).normalized;
@@ -110,19 +126,18 @@ public class AI_Path : MonoBehaviour
         }
         else
         {
-            agent.ResetPath(); 
-            Flip();
+            agent.ResetPath();
             hasPatrolPoint = false;
-            enemyPatrol.PatrolLogic2();
         }
     }
     private void Flip()
     {
         if (agent.velocity.x < 0.1f && agent.velocity.x > -0.1f) return;
-        if (agent.velocity.x < 0)
-            transform.localScale = new Vector3(-1, 1, 1); // Quay trái
+        Vector3 lookDir2 = (player.position - transform.position).normalized;
+        if (lookDir2.x < 0f)
+            transform.localScale = new Vector3(-1, 1, 1); // quay trái
         else
-            transform.localScale = new Vector3(1, 1, 1); // Quay phải
+            transform.localScale = new Vector3(1, 1, 1); // quay phải
     }
     private void Attack()
     {
@@ -138,13 +153,6 @@ public class AI_Path : MonoBehaviour
         yield return new WaitForSeconds(attackCooldown); 
         isEnemyAttacking = false; 
     }
-    //private bool IsObstacleInFront()
-    //{
-    //    Vector2 direction = (player.position - transform.position).normalized;
-    //    float distance = Vector2.Distance(transform.position, player.position);
-    //    RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, distance, obstructionMask);
-    //    return hit.collider != null;
-    //}
 
     private void OnDrawGizmosSelected()
     {

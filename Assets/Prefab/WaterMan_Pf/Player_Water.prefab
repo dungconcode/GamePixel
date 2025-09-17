@@ -197,6 +197,7 @@ GameObject:
   - component: {fileID: 6235994313669023354}
   - component: {fileID: 2727093808263369808}
   - component: {fileID: 3288593875414718396}
+  - component: {fileID: 6722295975399978651}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -296,10 +297,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerIndex: {fileID: 11400000, guid: 7eac029b7f9aa6a499feecfa49b9c3e7, type: 2}
+  update: {fileID: 0}
   maxHealth: 4
   currentHealth: 4
   maxArmor: 3
   currentArmor: 3
+  damagePopupPrefab: {fileID: 0}
+  playerHeart: {fileID: 0}
 --- !u!114 &6235994313669023354
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -314,7 +318,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   joystick: {fileID: 0}
   speed: 0
+  isMoving: 0
   directionPlayer: {x: 0, y: 0}
+  weaponManager: {fileID: 0}
+  currentWeapon: {fileID: 0}
+  autoAimRadius: 8
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!95 &2727093808263369808
 Animator:
   serializedVersion: 5
@@ -388,6 +399,20 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &6722295975399978651
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1057969310476927086}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 411ecd167a2c6e545aea0c73b757b169, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isKnockBack: 0
+  knockBackForce: 10
 --- !u!1 &1530001622916821622
 GameObject:
   m_ObjectHideFlags: 0
@@ -1440,7 +1465,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 19eb15b2518584440b6bd52ac46260a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rb: {fileID: 5369171008245232859}
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!1 &7171413882433889622
 GameObject:
   m_ObjectHideFlags: 0
@@ -1582,7 +1609,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   icon: {fileID: 0}
   iceBulletPrefab: {fileID: 4529813654388903469, guid: 067eb40080b14434fb1cdf9cb1e16d71, type: 3}
-  bulletCount: 8
 --- !u!1 &7923707340589655964
 GameObject:
   m_ObjectHideFlags: 0

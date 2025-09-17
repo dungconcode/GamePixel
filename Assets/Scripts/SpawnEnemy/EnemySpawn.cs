@@ -14,6 +14,11 @@ public class EnemySpawn : MonoBehaviour
     private Coroutine spawnCoroutine;
     public List<GameObject> spawnedEnemies = new List<GameObject>();
 
+    [Header("Indicate")]
+    [SerializeField] private GameObject indicateSpawnPoint;
+    [SerializeField] private GameObject indicatorAnimator;
+
+
     private Coroutine removeCoroutine;
     private void Start()
     {
@@ -34,13 +39,13 @@ public class EnemySpawn : MonoBehaviour
     private IEnumerator SpawnWave()
     {
         currentEnemyCount = 0;
+        yield return new WaitForSeconds(0.5f);
         for (int i = 0; i < enemyPerWave; i++)
         {
             SpawnEnemy();
             currentEnemyCount++;
-            yield return new WaitForSeconds(0.1f);
+            //yield return new WaitForSeconds(0.1f);
         }
-         // Chờ trước khi spawn wave tiếp theo
         isSpawning = false; // wave đã spawn xong
     }
     public void EnemyDied(GameObject enemy)
@@ -85,16 +90,29 @@ public class EnemySpawn : MonoBehaviour
     private void SpawnEnemy()
     {
         Vector2 spawnPosition = GetRandomSpawnPosition();
-        GameObject enemyPrefab = enemyPrefabs[Random.Range(0, enemyPrefabs.Length)];
-        GameObject enemy = Instantiate(enemyPrefab, spawnPosition, Quaternion.identity);
-        enemy.SetActive(true);
-        var enemyAI = enemy.GetComponent<Enemy_Patrol>();
-        if (enemyAI != null)
+        
+        GameObject indicator = Instantiate(indicatorAnimator, spawnPosition, Quaternion.identity);
+        indicator.SetActive(true);
+        
+        var indicatorScript = indicator.GetComponent<SpawnIndicator>();
+        if (indicatorScript != null)
         {
-            enemyAI.Initialize(spawnPosition); // Khởi tạo AI với vị trí spawn và vùng di chuyển
+            indicatorScript.Initialize(spawnPosition, this);
         }
-        spawnedEnemies.Add(enemy);
     }
+    //public void SpawnEnemyAtPoint(Vector2 spawnPosition)
+    //{
+    //    GameObject enemyPrefab = enemyPrefabs[Random.Range(0, enemyPrefabs.Length)];
+    //    GameObject enemy = Instantiate(enemyPrefab, spawnPosition, Quaternion.identity);
+        
+    //    enemy.SetActive(true);
+    //    var enemyAI = enemy.GetComponent<Enemy_Patrol>();
+    //    if (enemyAI != null)
+    //    {
+    //        enemyAI.Initialize(spawnPosition); // Khởi tạo AI với vị trí spawn và vùng di chuyển
+    //    }
+    //    spawnedEnemies.Add(enemy);
+    //}
     private Vector2 GetRandomSpawnPosition()
     {
         Vector2 min = spawnArea.bounds.min;

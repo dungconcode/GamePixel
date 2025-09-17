@@ -264,7 +264,7 @@ NavMeshAgent:
   m_Height: 0.9
   m_BaseOffset: 0.5
   m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 4
+  m_ObstacleAvoidanceType: 0
 --- !u!70 &4091889167775210080
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -387,9 +387,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52d8f8dc08a85394293103522200ba68, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  curentHealth: 100
-  maxHealth: 100
+  curentHealth: 10
+  maxHealth: 10
   damagePopupPrefab: {fileID: 2925258136817871337, guid: d9357c3bc7dcc9444803aaaae93c5db0, type: 3}
+  enemyHealth: {fileID: 1973618660051989990, guid: 1a0f525c38497b44b974410432c4876f, type: 3}
 --- !u!114 &542252647016941980
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -403,6 +404,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   patrolPoint: {x: 0, y: 0}
+  targetPatrol: {x: 0, y: 0, z: 0}
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 2176
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  tmp: 1
 --- !u!114 &8939634036647702161
 MonoBehaviour:
   m_ObjectHideFlags: 0

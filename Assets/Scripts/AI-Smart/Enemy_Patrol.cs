@@ -2,22 +2,43 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-
-public class Enemy_Patrol : MonoBehaviour
+public interface IEnemyPatrolTick
+{
+    void OnPatrolTick();
+}
+public class Enemy_Patrol : MonoBehaviour, IEnemyPatrolTick
 {
     public Vector2 patrolPoint;
     private AI_Path aiPath;
     private NavMeshAgent agent;
-    private Vector2 targetPatrol;
-    private float patrolRange = 3f;
+    public Vector3 targetPatrol;
+    private float patrolRange = 5f;
     private float coutTime = 2f;
 
+    private Rigidbody2D rb;
+    private float moveSpeed = 10f;
+    [SerializeField] private LayerMask groundLayer;
+    [SerializeField] private LayerMask enemyLayer;
+    public int tmp = 1;
+    public bool isEnemyInRoom = false;
 
-    // Start is called before the first frame update
     private void Start()
     {
         aiPath = GetComponent<AI_Path>();
         agent = GetComponent<NavMeshAgent>();
+        rb = GetComponent<Rigidbody2D>();
+    }
+    private void OnEnable()
+    {
+        EnemyManager.Instance.RegisterPatrol(this);
+    }
+    private void OnDisable()
+    {
+        EnemyManager.Instance.UnregisterPatrol(this);
+    }
+    public void OnPatrolTick()
+    {
+        PatrolLogic2();
     }
     public void Initialize(Vector2 spawnPoint)
     {
@@ -25,10 +46,19 @@ public class Enemy_Patrol : MonoBehaviour
         EnemyPatrolPoint(); 
     }
     
-    public void PatrolLogic2()
+    private void PatrolLogic2()
     {
         if (!aiPath.hasPatrolPoint)
         {
+            if (!aiPath.hasPatrolPoint && isEnemyInRoom)
+            {
+                if (tmp == 1)
+                {
+                    targetPatrol = transform.position;
+                    patrolPoint = transform.position;
+                    tmp = 0;
+                }
+            }
             if (coutTime > 0f)
             {
                 aiPath.isMoving = false;
@@ -38,33 +68,49 @@ public class Enemy_Patrol : MonoBehaviour
             }
             else
             {
-                
-                aiPath.isMoving = true;
-                agent.SetDestination(targetPatrol);
-                if (Vector2.Distance(transform.position, targetPatrol) < 0.3f)
+                Vector3 direction = (targetPatrol - transform.position).normalized;
+
+                RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, 1f, groundLayer);
+                if (hit.collider != null)
                 {
                     EnemyPatrolPoint(); // Tạo điểm tuần tra mới
-                    coutTime = 2f; // Reset thời gian đợi
+                    return;
+                }
+                aiPath.isMoving = true;
+                if (direction.x > 0.01f)
+                {
+                    transform.localScale = new Vector3(1, 1, 1);
+                }
+                else if (direction.x < -0.01f)
+                {
+                    transform.localScale = new Vector3(-1, 1, 1);
+                }
+                    Vector3 moveStep = direction * moveSpeed * Time.deltaTime;
+                rb.MovePosition(transform.position + moveStep);
+                if (Vector2.Distance(transform.position, targetPatrol) < 0.3f)
+                {
+                    EnemyPatrolPoint(); 
+                    coutTime = 2f; 
                 }
             }
+        }
+        if(aiPath.hasPatrolPoint)
+        {
+            tmp = 1;
         }
     }
     private void EnemyPatrolPoint()
     {
-        Vector2 centre = patrolPoint;
-        for (int i = 0; i < 10; i++) // Thử tối đa 10 lần
-        {
-            Vector2 randomPoint = centre + Random.insideUnitCircle * patrolRange;
-
-            NavMeshHit hit;
-            if (NavMesh.SamplePosition(randomPoint, out hit, 0.5f, NavMesh.AllAreas))
-            {
-                targetPatrol = hit.position;
-                return;
-            }
-        }
-
-        // Nếu không tìm được, fallback
-        targetPatrol = patrolPoint;
+        Vector3 centre = patrolPoint; 
+        Vector2 random2D = Random.insideUnitCircle * patrolRange; 
+        Vector3 randomPoint = centre + new Vector3(random2D.x, random2D.y, 0); 
+        targetPatrol = randomPoint; 
+    }
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(patrolPoint, patrolRange);
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireSphere(targetPatrol, 0.3f);
     }
 }

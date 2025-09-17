@@ -212,6 +212,7 @@ GameObject:
   - component: {fileID: 4497326820796558904}
   - component: {fileID: 7141535542543629805}
   - component: {fileID: 9155400665108721170}
+  - component: {fileID: 6771654394749246602}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -311,10 +312,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerIndex: {fileID: 11400000, guid: 7eac029b7f9aa6a499feecfa49b9c3e7, type: 2}
+  update: {fileID: 0}
   maxHealth: 4
   currentHealth: 4
   maxArmor: 3
   currentArmor: 3
+  damagePopupPrefab: {fileID: 0}
+  playerHeart: {fileID: 0}
 --- !u!114 &4497326820796558904
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -331,6 +335,12 @@ MonoBehaviour:
   speed: 0
   isMoving: 0
   directionPlayer: {x: 0, y: 0}
+  weaponManager: {fileID: 0}
+  currentWeapon: {fileID: 0}
+  autoAimRadius: 8
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!95 &7141535542543629805
 Animator:
   serializedVersion: 5
@@ -404,6 +414,20 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &6771654394749246602
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1484197574209857191}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 411ecd167a2c6e545aea0c73b757b169, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isKnockBack: 0
+  knockBackForce: 10
 --- !u!1 &1654897023959249021
 GameObject:
   m_ObjectHideFlags: 0
@@ -1847,7 +1871,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 19eb15b2518584440b6bd52ac46260a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rb: {fileID: 5158484173808577293}
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!1 &9033016463242201134
 GameObject:
   m_ObjectHideFlags: 0

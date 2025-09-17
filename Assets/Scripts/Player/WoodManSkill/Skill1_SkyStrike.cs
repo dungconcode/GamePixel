@@ -10,7 +10,7 @@ public class Skill1_SkyStrike : SkillBase
     [SerializeField] private GameObject effectPrefabs;
     [SerializeField] private GameObject indicatorPrefabs;
     public float indicatorDuration = 0.05f;
-    public float delayBeforeHit = 0.2f;
+    public float delayBeforeHit = 0.1f;
     private void Start()
     {
         radius = 4f; // Set default radius if not set in inspector
@@ -33,6 +33,8 @@ public class Skill1_SkyStrike : SkillBase
         foreach (Collider2D enemy in sortEnemy)
         {
             if (count >= targetEnemy) break;
+            if (enemy == null || enemy.gameObject == null)
+                continue;
             if (enemy != null)
             {
                 GameObject indicator = Instantiate(indicatorPrefabs, enemy.transform.position, Quaternion.identity);

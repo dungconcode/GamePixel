@@ -12,7 +12,7 @@ public class Skill3_SeedBullet : SkillBase
     private Animator skill3Animator;
     private void Start()
     {
-        skill3Animator = GameObject.Find("Bow").GetComponent<Animator>();
+        skill3Animator = GameObject.Find("Magic_Wood").GetComponent<Animator>();
     }
     public override void Activate()
     {

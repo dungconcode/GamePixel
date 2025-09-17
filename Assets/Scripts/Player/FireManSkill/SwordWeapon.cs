@@ -12,6 +12,8 @@ public class SwordWeapon : WeaponBase
     private void Start()
     {
         damage = PlayerHealth.instance.playerIndex.damage;
+        //attackPoint = gameObject.transform.Find("AttackPoint").gameObject;
+        attackPoint = GameObject.Find("AttackPoint2");
         anim = GetComponentInChildren<Animator>();
     }
 
@@ -21,6 +23,7 @@ public class SwordWeapon : WeaponBase
     }
     public void DamageEnemy()
     {
+        if (attackPoint == null) return;
         Collider2D[] hitenemy = Physics2D.OverlapCircleAll(attackPoint.transform.position, radius, enemyLayerMask);
         foreach (Collider2D enemy in hitenemy)
         {

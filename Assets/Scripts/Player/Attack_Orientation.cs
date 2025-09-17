@@ -48,15 +48,6 @@ public class Attack_Orientation : MonoBehaviour
                 RotateTowardsDirection(direction);
                 FlipSprite(direction.x);
             }
-            else
-            {
-                Vector2 moveDir = Player_Controller.Instance.directionPlayer;
-                if (moveDir.sqrMagnitude > 0.01f)
-                {
-                    RotateTowardsDirection(moveDir);
-                    FlipSprite(moveDir.x);
-                }
-            }
         }
     }
 

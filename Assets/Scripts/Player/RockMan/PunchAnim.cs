@@ -17,6 +17,7 @@ public class PunchAnim : MonoBehaviour
     }
     public void DamageEnemy()
     {
+        if (attackPoint == null) return;
         Collider2D[] hitenemy = Physics2D.OverlapCircleAll(attackPoint.transform.position, radius, enemyLayerMask);
         foreach (Collider2D enemy in hitenemy)
         {

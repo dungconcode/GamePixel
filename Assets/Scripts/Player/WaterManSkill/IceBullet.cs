@@ -30,9 +30,6 @@ public class IceBullet : MonoBehaviour
         if (controller != null)
             controller.enabled = false;
         
-        
-        if (rb != null)
-            rb.velocity = Vector2.zero;
         GameObject ice = null;
         ice = Instantiate(iceEffectPrefab, enemy.transform.position, Quaternion.identity);
         ice.transform.SetParent(enemy.transform);

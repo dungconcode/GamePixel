@@ -69,7 +69,6 @@ public class SafeSkillKnockBack : MonoBehaviour
         if (circleCollider2D != null)
         {
             circleCollider2D.enabled = true;
-            Debug.Log(circleCollider2D.enabled);
             StartCoroutine(ExpaindRadius(maxradius, 0.5f)); 
             yield return new WaitForSeconds(1f);
             circleCollider2D.radius = 0f;

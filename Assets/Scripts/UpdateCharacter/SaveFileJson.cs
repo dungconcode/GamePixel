@@ -25,7 +25,7 @@ public class SaveFileJson
         {
             Debug.LogWarning("No save found, creating new data from SO");
             CharacterData newData = new CharacterData(ind);
-            SaveCharacterData(newData); // tạo file luôn
+            SaveCharacterData(newData); 
             return newData;
         }
     }
