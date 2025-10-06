@@ -7,7 +7,7 @@ public class BowWeapon : WeaponBase
     [SerializeField] private GameObject attackPoint;
     [SerializeField] private LayerMask enemyLayerMask;
     [SerializeField] private GameObject arrowPrefab;
-    private float arrowSpeed = 10f;
+    private float arrowSpeed = 15f;
     private Animator anim;
 
     private void Start()

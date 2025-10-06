@@ -37,7 +37,7 @@ public class Enemy_Slash : MonoBehaviour
         if (hitPlayers != null)
         {
             hitPlayers.GetComponent<PlayerHealth>()?.TakeDamage(damage);
-            hitPlayers.GetComponent<Player_KnockBack>()?.KnockBack(transform);
+            hitPlayers.GetComponent<Player_KnockBack>()?.KnockBack(transform, 10f);
         }
     }
     public void StopShooting()

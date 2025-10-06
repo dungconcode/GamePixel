@@ -13,6 +13,7 @@ public class EnemyWaveData
 public class SpawnAreaData
 {
     public string areaName = "Room"; // để dễ phân biệt
+    public int levelEnemy;
     public BoxCollider2D spawnArea;                // Khu vực spawn
     public List<EnemyWaveData> enemyWaves = new List<EnemyWaveData>(); // Danh sách loại enemy trong khu vực này
 

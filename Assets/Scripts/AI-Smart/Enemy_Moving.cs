@@ -11,9 +11,21 @@ public class Enemy_Moving : MonoBehaviour,IEnemyTick
     [SerializeField] private Animator weaponAnim;
     void Start()
     {
-        aiPath = GetComponent<AI_Path>();
         player = GameObject.FindGameObjectWithTag("Player")?.transform;
+        aiPath = GetComponent<AI_Path>();
+        if (aiPath == null)
+            Debug.LogError($"{name} is missing AI_Path component!");
+
         anim = GetComponent<Animator>();
+        if (anim == null)
+            Debug.LogError($"{name} is missing Animator component!");
+
+        if (weaponAnim == null)
+        {
+            weaponAnim = GetComponentInChildren<Animator>();
+            if (weaponAnim == null)
+                Debug.LogWarning($"{name} has no child Animator assigned as weaponAnim!");
+        }
     }
     public void OnEnable()
     {
@@ -25,7 +37,17 @@ public class Enemy_Moving : MonoBehaviour,IEnemyTick
     }
     public void Ontick()
     {
-        anim.SetBool("isMoving", aiPath.isMoving);
-        weaponAnim.SetBool("isMoving", aiPath.isMoving);
+        if (aiPath == null) return;
+        if (anim != null) 
+        {
+            anim.SetBool("isMoving", aiPath.isMoving);
+        }
+
+        
+        if (weaponAnim != null)
+        {
+            weaponAnim.SetBool("isMoving", aiPath.isMoving);
+        }
+        
     }
 }

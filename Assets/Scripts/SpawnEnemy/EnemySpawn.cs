@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class EnemySpawn : MonoBehaviour
 {
-    public static EnemySpawn Instance { get; private set; } // Singleton instance
+    public static EnemySpawn Instance { get; private set; } 
     [SerializeField] private GameObject[] enemyPrefabs;
     [SerializeField] private BoxCollider2D spawnArea;
-    private float spawnInterval = 2f; // Khoảng thời gian giữa các lần spawn
+    private float spawnInterval = 2f; 
     private float enemyPerWave = 5f;
-    public float currentEnemyCount = 0; // Biến để đếm số lượng enemy đã spawn
-    private bool isSpawning = false; // Biến để kiểm tra xem đã spawn chưa
+    public float currentEnemyCount = 0; 
+    private bool isSpawning = false; 
     private Coroutine spawnCoroutine;
     public List<GameObject> spawnedEnemies = new List<GameObject>();
 
@@ -24,7 +24,7 @@ public class EnemySpawn : MonoBehaviour
     {
         if (Instance == null)
         {
-            Instance = this; // Thiết lập singleton instance
+            Instance = this; 
         }
     }
     public void StartSpawnEnemy()

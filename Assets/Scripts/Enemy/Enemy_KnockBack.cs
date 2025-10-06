@@ -16,7 +16,8 @@ public class Enemy_KnockBack : MonoBehaviour
     }
     public void FreezeEnemy(GameObject effectFreeze, float freezeDuration)
     {
-        StartCoroutine(FreezeCouroutine(effectFreeze, freezeDuration));
+        if (gameObject.activeInHierarchy)
+            StartCoroutine(FreezeCouroutine(effectFreeze, freezeDuration));
     }
     IEnumerator FreezeCouroutine(GameObject effectFreeze, float freezeDuration)
     {

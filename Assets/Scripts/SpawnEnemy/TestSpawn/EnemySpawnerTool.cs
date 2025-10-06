@@ -28,6 +28,7 @@ public class EnemySpawnerTool : EditorWindow
             area.spawnArea = (BoxCollider2D)EditorGUILayout.ObjectField("Spawn Area", area.spawnArea, typeof(BoxCollider2D), true);
             //EditorGUILayout.BeginVertical();
             area.areaName = (string)EditorGUILayout.TextField("Area Name", area.areaName);
+            area.levelEnemy = (int)EditorGUILayout.IntField("Level Enemy", area.levelEnemy);
             for(int j = 0; j < area.enemyWaves.Count; j++)
             {
                 var wave = area.enemyWaves[j];
@@ -38,6 +39,7 @@ public class EnemySpawnerTool : EditorWindow
                 {
                     area.enemyWaves.RemoveAt(j);
                 }
+                
                 EditorGUILayout.EndHorizontal();
             }
             if (GUILayout.Button("Add Enemy Wave"))

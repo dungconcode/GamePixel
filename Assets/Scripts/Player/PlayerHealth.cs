@@ -66,6 +66,7 @@ public class PlayerHealth : MonoBehaviour
     }
     public void TakeDamage(int _damage)
     {
+        if (gameObject.activeInHierarchy == false) return;
         StartCoroutine(DelayPLayerHeart(0.1f));
         currentArmor -= _damage;
         ShowPopUpDamage(_damage);
@@ -78,6 +79,7 @@ public class PlayerHealth : MonoBehaviour
             {
                 currentHealth = 0;
                 gameObject.SetActive(false);
+                Destroy(gameObject, 0.1f);
                 return;
             }
         }

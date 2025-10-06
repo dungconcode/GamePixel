@@ -5,15 +5,17 @@ using UnityEngine;
 public class Player_KnockBack : MonoBehaviour
 {
     public bool isKnockBack;
-    [SerializeField] private float knockBackForce = 10f;
+    //[SerializeField] private float knockBackForce = 10f;
     private Rigidbody2D rb;
 
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
     }
-    public void KnockBack(Transform enemyTransform)
+    public void KnockBack(Transform enemyTransform, float knockBackForce)
     {
+        if (!gameObject.activeInHierarchy) return;
+
         isKnockBack = true;
         Vector2 direction = (transform.position - enemyTransform.position).normalized;
         rb.velocity = direction * knockBackForce;

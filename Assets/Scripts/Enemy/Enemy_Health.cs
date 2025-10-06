@@ -6,7 +6,9 @@ using System;
 public enum EnemyType
 {
     Normal,
-    TrapCircleBullet
+    TrapCircleBullet,
+    TrapToxicArea,
+    TrapBoom
 }
 public class Enemy_Health : MonoBehaviour
 {
@@ -18,8 +20,11 @@ public class Enemy_Health : MonoBehaviour
     [SerializeField] private GameObject enemyHealth;
     //[SerializeField] private TMP_Text damagePopUpTxT;
 
-    public static event Action<Vector3, EnemyType> OnEnemyDeath;
+    public static event Action<Enemy_Health, Vector3, EnemyType> OnEnemyDeath;
     public EnemyType enemyType;
+
+    private bool isDead = false;
+
     private void Start()
     {
         curentHealth = maxHealth;
@@ -31,9 +36,12 @@ public class Enemy_Health : MonoBehaviour
         StartCoroutine(DelayEnemyHeart(0.1f));
         curentHealth -= damage;
         ShowDamagePopup(damage);
-        
-        if (curentHealth <= 0)
+        Debug.Log(isDead);
+        Debug.Log(curentHealth);
+        if (curentHealth <= 0 && !isDead)
         {
+            //StartCoroutine(DieDelay(0.5f));
+            Debug.Log("Enemy Die");
             Die();
         }
     }
@@ -71,14 +79,15 @@ public class Enemy_Health : MonoBehaviour
     }
     private void Die()
     {
-        if (onDeath != null)
-        {
-            onDeath.Invoke();
-            onDeath = null; // Đảm bảo chỉ gọi một lần
-        }
-        OnEnemyDeath?.Invoke(transform.position, enemyType);
-        gameObject.SetActive(false); // Deactivate the enemy object
+        if (isDead) return;  // tránh gọi lại
+        isDead = true;
+        GetComponent<EnemyDropGold>().DropGold();
+        OnEnemyDeath?.Invoke(this, transform.position, enemyType);
+        onDeath?.Invoke();
+        onDeath = null;
+        gameObject.SetActive(false);
+        
         Destroy(gameObject,1f);
     }
-    
+
 }

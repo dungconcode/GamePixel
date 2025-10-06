@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Destroy_Bullet : MonoBehaviour
 {
-    private float timeCoolDown = 2f;
+    public float timeCoolDown = 2f;
 
     private void Update()
     {

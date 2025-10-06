@@ -8,7 +8,6 @@ public class EnemySmart_Controller : MonoBehaviour
     private AI_Path aiPath;
     private Transform player;
     private Animator anim;
-    [SerializeField] private Transform rotatePoint;
     void Start()
     {
         aiPath = GetComponent<AI_Path>();

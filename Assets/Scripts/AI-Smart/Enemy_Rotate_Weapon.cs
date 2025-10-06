@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -17,11 +17,18 @@ public class Enemy_Rotate_Weapon : MonoBehaviour
     }
     private void Update()
     {
+        if (playerTransforms == null || enemyTransforms == null)
+        {
+            playerTransforms = GameObject.FindGameObjectWithTag("Player")?.transform;
+            if (playerTransforms == null) return; // nếu chưa có player thì dừng
+        }
+
         CheckPlayerNearly();
 
     }
     private void CheckPlayerNearly()
     {
+        if (playerTransforms == null) return;
         RaycastHit2D hit = Physics2D.Raycast(transform.position, playerTransforms.position - transform.position, detectionRadius, 1 << LayerMask.NameToLayer("Player"));
         Collider2D radiusCheck = Physics2D.OverlapCircle(transform.position, detectionRadius, 1 << LayerMask.NameToLayer("Player"));
         if (hit.collider != null)

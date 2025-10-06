@@ -19,6 +19,7 @@ GameObject:
   - component: {fileID: 1129114155563663263}
   - component: {fileID: 1140968049848906523}
   - component: {fileID: 4320461076308810963}
+  - component: {fileID: 8095349750200566560}
   m_Layer: 6
   m_Name: EnemySmartGunner
   m_TagString: Enemy
@@ -225,7 +226,6 @@ MonoBehaviour:
   attackRange: 5
   attackCooldown: 1
   isEnemyAttacking: 0
-  attackDelay: 0.3
 --- !u!114 &3001626087917475595
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -242,6 +242,7 @@ MonoBehaviour:
   maxHealth: 10
   damagePopupPrefab: {fileID: 2925258136817871337, guid: d9357c3bc7dcc9444803aaaae93c5db0, type: 3}
   enemyHealth: {fileID: 1973618660051989990, guid: 1a0f525c38497b44b974410432c4876f, type: 3}
+  enemyType: 0
 --- !u!114 &1129114155563663263
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -276,6 +277,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59096887f802b284da9bdc83097955a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  knockBackForce: 0
 --- !u!114 &4320461076308810963
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -288,6 +290,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ed2770b4f965d34bba9d2f9bc331573, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  weaponAnim: {fileID: 0}
+--- !u!114 &8095349750200566560
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1362505369374879827}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9451baeba2198814bb869a335b560a1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attackEffectSOs: []
 --- !u!1 &4405738878627363678
 GameObject:
   m_ObjectHideFlags: 0
@@ -368,6 +384,7 @@ MonoBehaviour:
   enemyTransforms: {fileID: 0}
   playerTransforms: {fileID: 0}
   detectionRadius: 7
+  maxAngle: 0
 --- !u!1 &7422723873860123516
 GameObject:
   m_ObjectHideFlags: 0

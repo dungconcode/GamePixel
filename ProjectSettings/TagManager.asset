@@ -8,6 +8,7 @@ TagManager:
   - Bullet Enemy
   - Human
   - Weapon
+  - ToxicArea
   layers:
   - Default
   - TransparentFX

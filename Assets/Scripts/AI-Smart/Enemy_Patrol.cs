@@ -16,7 +16,7 @@ public class Enemy_Patrol : MonoBehaviour, IEnemyPatrolTick
     private float coutTime = 2f;
 
     private Rigidbody2D rb;
-    private float moveSpeed = 10f;
+    private float moveSpeed = 30f;
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private LayerMask enemyLayer;
     public int tmp = 1;
@@ -30,11 +30,13 @@ public class Enemy_Patrol : MonoBehaviour, IEnemyPatrolTick
     }
     private void OnEnable()
     {
-        EnemyManager.Instance.RegisterPatrol(this);
+        if (EnemyManager.Instance != null)
+            EnemyManager.Instance.RegisterPatrol(this);
     }
     private void OnDisable()
     {
-        EnemyManager.Instance.UnregisterPatrol(this);
+        if (EnemyManager.Instance != null)
+            EnemyManager.Instance.UnregisterPatrol(this);
     }
     public void OnPatrolTick()
     {
@@ -48,6 +50,7 @@ public class Enemy_Patrol : MonoBehaviour, IEnemyPatrolTick
     
     private void PatrolLogic2()
     {
+        if (aiPath == null) return;
         if (!aiPath.hasPatrolPoint)
         {
             if (!aiPath.hasPatrolPoint && isEnemyInRoom)

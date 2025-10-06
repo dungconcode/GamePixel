@@ -36,7 +36,8 @@ public class AI_Path : MonoBehaviour, IEnemyTick
     [SerializeField] private float attackCooldown = 1f; 
     private float lastAttackTime = 0f;
     public bool isEnemyAttacking = false;
-    [SerializeField] private float attackDelay = 0.3f;
+
+    private Enemy_AttackSmart enemyAttack;
 
     private void Start()
     {
@@ -45,6 +46,11 @@ public class AI_Path : MonoBehaviour, IEnemyTick
 
         agent.updateRotation = false; // Tắt cập nhật xoay của agent
         agent.updateUpAxis = false; // Tắt cập nhật trục Y của agent
+        enemyAttack = GetComponent<Enemy_AttackSmart>();
+    }
+    public void SetattackRanger(float attac_kRange)
+    {
+        this.attackRange = attac_kRange;
     }
     public void OnEnable()
     {
@@ -59,6 +65,11 @@ public class AI_Path : MonoBehaviour, IEnemyTick
         if (isFrozen)
         {
             agent.ResetPath();
+            return;
+        }
+        if (isEnemyAttacking)
+        {
+            agent.isStopped = false; // cho phép skill điều khiển agent
             return;
         }
         Enemy_Patrol patrol = GetComponent<Enemy_Patrol>();
@@ -90,15 +101,16 @@ public class AI_Path : MonoBehaviour, IEnemyTick
                 {
                     RaycastHit2D hit = Physics2D.Raycast(transform.position, dirToPlayer, 0.5f, obstructionMask);
                     Enemy_Patrol patrol = GetComponent<Enemy_Patrol>();
-                    if(patrol.isEnemyInRoom)
+                    if(patrol.isEnemyInRoom && enemyAttack != null)
                     {
-                        Attack();
+                        enemyAttack.TryAttack();
+                        //Debug.Log(isEnemyAttacking);
                         lastAttackTime = Time.time;
                     }
                        
                 }
             }
-            else if (distanceToPlayer < attackRange) 
+            else if (distanceToPlayer <= attackRange) 
             {
                 agent.isStopped = false;
                 isMoving = true;
@@ -115,7 +127,7 @@ public class AI_Path : MonoBehaviour, IEnemyTick
             else
             {
                 Flip();
-                isEnemyAttacking = false;
+                //isEnemyAttacking = false;
                 agent.isStopped = false;
                 isMoving = true;
                 agent.SetDestination(player.position);
@@ -139,20 +151,6 @@ public class AI_Path : MonoBehaviour, IEnemyTick
         else
             transform.localScale = new Vector3(1, 1, 1); // quay phải
     }
-    private void Attack()
-    {
-        if(!isEnemyAttacking)
-        {
-            StartCoroutine(AttackAfterDelay());
-        }
-    }
-    private IEnumerator AttackAfterDelay()
-    {
-        isEnemyAttacking = true;
-        yield return new WaitForSeconds(attackDelay);
-        yield return new WaitForSeconds(attackCooldown); 
-        isEnemyAttacking = false; 
-    }
 
     private void OnDrawGizmosSelected()
     {
@@ -161,7 +159,6 @@ public class AI_Path : MonoBehaviour, IEnemyTick
 
         Gizmos.color = Color.green;
 
-        // Vẽ hình nón (hình quạt) để thể hiện góc nhìn (fieldOfView)
         Vector3 forward = transform.forward;
         Quaternion leftRayRotation = Quaternion.AngleAxis(-fieldOfView / 2, Vector3.up);
         Quaternion rightRayRotation = Quaternion.AngleAxis(fieldOfView / 2, Vector3.up);

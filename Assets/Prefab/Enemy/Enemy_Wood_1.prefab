@@ -108,7 +108,7 @@ Transform:
   m_GameObject: {fileID: 5308572883218539797}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.424, y: -0.399, z: 0}
+  m_LocalPosition: {x: 0.398, y: -0.399, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -223,6 +223,8 @@ GameObject:
   - component: {fileID: 6235839195928268885}
   - component: {fileID: 2498659635309122442}
   - component: {fileID: 3354380829158661035}
+  - component: {fileID: 7882651040929091466}
+  - component: {fileID: 3802500494289941237}
   m_Layer: 6
   m_Name: Enemy_Wood_1
   m_TagString: Enemy
@@ -430,7 +432,6 @@ MonoBehaviour:
   attackRange: 1
   attackCooldown: 1
   isEnemyAttacking: 0
-  attackDelay: 1
 --- !u!114 &8155133427144518125
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -447,6 +448,7 @@ MonoBehaviour:
   maxHealth: 10
   damagePopupPrefab: {fileID: 2925258136817871337, guid: d9357c3bc7dcc9444803aaaae93c5db0, type: 3}
   enemyHealth: {fileID: 1973618660051989990, guid: 1a0f525c38497b44b974410432c4876f, type: 3}
+  enemyType: 0
 --- !u!114 &6235839195928268885
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -495,3 +497,36 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponAnim: {fileID: 7203381384570099685}
+--- !u!114 &7882651040929091466
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5710466880419699086}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9451baeba2198814bb869a335b560a1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attackEffectSOs: []
+  attackDelay: 0.5
+  isDashAttack: 0
+--- !u!114 &3802500494289941237
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5710466880419699086}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 092ddfc8a824eff4c91fcff09cfcee4f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  goldPrefabs: {fileID: 7674582957137028749, guid: 9ad5f6fc6e0b459448a85e1b3a2295ce, type: 3}
+  minCoin: 1
+  maxCoin: 2
+  minValue: 1
+  maxValue: 2
+  radius: 0.5

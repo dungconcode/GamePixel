@@ -10,7 +10,9 @@ public class TestEnemySpawn : MonoBehaviour
 
     private Coroutine spawnCoroutine;
 
-
+    [SerializeField] private GameObject indicatorAnimator;
+    private float warningDuration = 0.2f;
+    private readonly Dictionary<SpawnAreaData, Coroutine> _clearJobs = new();
     private void Awake()
     {
         if (Instance == null) Instance = this;
@@ -26,6 +28,7 @@ public class TestEnemySpawn : MonoBehaviour
     //}
     public void StartSpawnInArea(SpawnAreaData area)
     {
+        CancelClearJob(area);
         BoxTrigger roomCollider = area.spawnArea.GetComponent<BoxTrigger>();
         if (area.activeEnimies.Count == 0 && roomCollider.isPlayerInside)
         {
@@ -34,11 +37,20 @@ public class TestEnemySpawn : MonoBehaviour
     }
     public void StopSpawnEnemy(SpawnAreaData area)
     {
-        StartCoroutine(DelayClearSpawn(area));
+        if (_clearJobs.ContainsKey(area)) return;
+        _clearJobs[area] = StartCoroutine(DelayClearSpawn(area));
+    }
+    private void CancelClearJob(SpawnAreaData area)
+    {
+        if (_clearJobs.TryGetValue(area, out var co))
+        {
+            if (co != null) StopCoroutine(co);
+            _clearJobs.Remove(area);
+        }
     }
     IEnumerator DelayClearSpawn(SpawnAreaData area)
     {
-        yield return new WaitForSeconds(8f);
+        yield return new WaitForSeconds(5f);
         for (int i = area.activeEnimies.Count - 1; i >= 0; i--)
         {
             var enemy = area.activeEnimies[i];
@@ -48,6 +60,7 @@ public class TestEnemySpawn : MonoBehaviour
             }
             area.activeEnimies.RemoveAt(i);
         }
+        _clearJobs.Remove(area);
     }
     private IEnumerator SpawnWavesInArea(SpawnAreaData area)
     {
@@ -56,7 +69,20 @@ public class TestEnemySpawn : MonoBehaviour
             for (int i = 0; i < wave.count; i++)
             {
                 Vector2 pos = GetRandomSpawnPosition(area.spawnArea);
+                if(indicatorAnimator != null)
+                {
+                    GameObject warning = Instantiate(indicatorAnimator, pos, Quaternion.identity);
+                    Destroy(warning, 0.5f);
+                }
+                yield return new WaitForSeconds(warningDuration);
+
                 GameObject enemy = Instantiate(wave.enemyPrefab, pos, Quaternion.identity);
+                Enemy_Health enemyhp = enemy.GetComponent<Enemy_Health>();
+                if (enemyhp != null)
+                {
+                    enemyhp.maxHealth = 10 + area.levelEnemy;
+                }
+
                 Enemy_Patrol patrol = enemy.GetComponent<Enemy_Patrol>();
                 if (patrol != null)
                 {
@@ -75,7 +101,11 @@ public class TestEnemySpawn : MonoBehaviour
             }
         }
     }
-
+    private IEnumerator DelayRespawn(SpawnAreaData area, float delayTime)
+    {
+        yield return new WaitForSeconds(delayTime);
+        StartSpawnInArea(area);
+    }
     private void OnEnemyDeath(SpawnAreaData area, GameObject enemy)
     {
         if (this == null || enemy == null) return;
@@ -86,31 +116,11 @@ public class TestEnemySpawn : MonoBehaviour
         }
         if(area.activeEnimies.Count == 0)
         {
-            Debug.Log("All enemies in area " + area.areaName + " have been defeated!");
-            StartSpawnInArea(area);
+            //Debug.Log("All enemies in area " + area.areaName + " have been defeated!");
+            StartCoroutine(DelayRespawn(area, 5f));
         }
     }
 
-    //private IEnumerator SpawnWavesLoop()
-    //{
-    //    while (true) // vô hạn wave
-    //    {
-    //        foreach (var area in spawnAreas)
-    //        {
-    //            foreach (var wave in area.enemyWaves)
-    //            {
-    //                for (int i = 0; i < wave.count; i++)
-    //                {
-    //                    Vector2 pos = GetRandomSpawnPosition(area.spawnArea);
-    //                    GameObject enemy = Instantiate(wave.enemyPrefab, pos, Quaternion.identity);
-    //                    spawnedEnemies.Add(enemy);
-    //                    yield return new WaitForSeconds(0.2f);
-    //                }
-    //            }
-    //        }
-    //        yield return new WaitForSeconds(3f); // delay giữa các wave
-    //    }
-    //}
 
     private Vector2 GetRandomSpawnPosition(BoxCollider2D area)
     {
