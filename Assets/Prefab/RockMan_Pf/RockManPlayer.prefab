@@ -566,6 +566,37 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!1 &2325672124161712439
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3656858024106695138}
+  m_Layer: 0
+  m_Name: SortPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3656858024106695138
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2325672124161712439}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.49, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8933111944993520717}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3287208659759543969
 GameObject:
   m_ObjectHideFlags: 0
@@ -1904,6 +1935,8 @@ GameObject:
   - component: {fileID: 5394475056238283283}
   - component: {fileID: 3747489653297035260}
   - component: {fileID: 3942312974631984177}
+  - component: {fileID: 5531403008451443666}
+  - component: {fileID: 8273015563257518956}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -1926,6 +1959,7 @@ Transform:
   m_Children:
   - {fileID: 110788588038171666}
   - {fileID: 1291350485125050244}
+  - {fileID: 3656858024106695138}
   m_Father: {fileID: 6068382701616335991}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!50 &2719144026589187110
@@ -2118,7 +2152,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isKnockBack: 0
-  knockBackForce: 10
+--- !u!114 &5531403008451443666
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8635021641674488462}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b5a4773bf1a7864ebded332def497cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sortPoint: {fileID: 3656858024106695138}
+--- !u!210 &8273015563257518956
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8635021641674488462}
+  m_Enabled: 1
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_SortAtRoot: 0
 --- !u!1 &8697246151486195533
 GameObject:
   m_ObjectHideFlags: 0

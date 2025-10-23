@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using static Unity.Burst.Intrinsics.X86.Avx;
 
 public interface IAttackEffect
 {
@@ -16,21 +17,24 @@ public class Enemy_AttackSmart : MonoBehaviour
     [SerializeField] private List<AttackEffectSO> attackEffectSOs;  // phải là AttackEffectSO
     private List<IAttackEffect> attackEffects = new List<IAttackEffect>();
 
-    private float attackCooldown = 1f;
+    private float attackCooldown = 0.5f;
     public float attackDelay = 0.5f;
 
     private Transform player;
 
     private Animator anim;
     private AI_Path aiPath;
-
+    private CapsuleCollider2D attackCollider;
     public bool isDashAttack;
+    private float tmp;
     private void Awake()
     {
         anim = GetComponent<Animator>();
         aiPath = GetComponent<AI_Path>();
+        attackCollider = GetComponent<CapsuleCollider2D>();
+        attackCollider.isTrigger = false;
         player = GameObject.FindGameObjectWithTag("Player")?.transform;
-
+        tmp = aiPath.attackRange;
         attackEffects.Clear();
         foreach (var so in attackEffectSOs)
         {
@@ -47,25 +51,33 @@ public class Enemy_AttackSmart : MonoBehaviour
     {
         aiPath.isEnemyAttacking = true;
         yield return new WaitForSeconds(attackDelay);
-        if (anim != null)
+        
+        if (anim != null && aiPath.isEnemyAttacking)
         {
             anim.SetBool("isAttack", true);
         }
-
         if (isDashAttack)
         {
             RandomSkill();
         }
         yield return new WaitForSeconds(attackCooldown);
         aiPath.isEnemyAttacking = false;
-        anim.SetBool("isAttack", false);
+        Debug.Log(aiPath.isEnemyAttacking);
+        if (!aiPath.isEnemyAttacking)
+        {
+            anim.SetBool("isAttack", false);
+            attackCollider.isTrigger = false;
+            aiPath.attackRange = tmp;
+            Debug.Log(aiPath.attackRange);
+        }
+        
 
         StartCoroutine(RetreatAfterAttack());
     }
     private IEnumerator RetreatAfterAttack()
     {
         aiPath.isEnemyAttacking = true;
-
+        
         var agent = GetComponent<NavMeshAgent>();
         if (agent == null || aiPath.player == null)
         {
@@ -74,7 +86,7 @@ public class Enemy_AttackSmart : MonoBehaviour
         }
 
         Vector3 retreatDir = (transform.position - aiPath.player.position).normalized;
-        float retreatDistance = 1.5f;
+        float retreatDistance = 0.5f;
 
         Vector3 targetPos = transform.position + retreatDir * retreatDistance;
 
@@ -90,9 +102,19 @@ public class Enemy_AttackSmart : MonoBehaviour
             t += Time.deltaTime;
             yield return null;
         }
-
-        // KHÔNG ResetPath ngay sau SetDestination.
+        if(isDashAttack)
+        {
+            RandomSkill();
+        }
         aiPath.isEnemyAttacking = false;
+        if(!aiPath.isEnemyAttacking)
+        {
+            anim.SetBool("isAttack", false);
+            attackCollider.isTrigger = false;
+            aiPath.attackRange = tmp;
+            Debug.Log(aiPath.attackRange);
+        }
+        agent.speed = 5f;
     }
 
     public void RandomSkill()
@@ -113,5 +135,9 @@ public class Enemy_AttackSmart : MonoBehaviour
             other.gameObject.GetComponent<PlayerHealth>()?.TakeDamage(1);
             other.gameObject.GetComponent<Player_KnockBack>()?.KnockBack(transform, 30f);
         }
+    }
+    public void TurnOnTigger()
+    {
+        attackCollider.isTrigger = true;
     }
 }

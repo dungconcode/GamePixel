@@ -46,7 +46,6 @@ public class GoldUI : MonoBehaviour
     {
         if(goldText != null)
         {
-            Debug.Log(total);
             goldText.text = total.ToString();
         }
         else

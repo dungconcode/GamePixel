@@ -31,6 +31,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 6184141593638200459}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &5468228227179049394
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1613233704432169246}
+  m_Layer: 6
+  m_Name: SortPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1613233704432169246
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5468228227179049394}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.156, y: -0.69, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4555651384053867704}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6116785885977429356
 GameObject:
   m_ObjectHideFlags: 0
@@ -52,6 +83,8 @@ GameObject:
   - component: {fileID: 447393804663740590}
   - component: {fileID: 7712696641392875181}
   - component: {fileID: -4719168511299465303}
+  - component: {fileID: 8311390637243876485}
+  - component: {fileID: 5720461023137081859}
   m_Layer: 6
   m_Name: Enemy_Wood_1(Trap Circle Bullet)
   m_TagString: Enemy
@@ -74,6 +107,7 @@ Transform:
   m_Children:
   - {fileID: 6298350120803856174}
   - {fileID: 6184141593638200459}
+  - {fileID: 1613233704432169246}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &5629681382396521582
@@ -352,6 +386,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackEffectSOs: []
+  attackDelay: 0.5
+  isDashAttack: 0
+--- !u!210 &8311390637243876485
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6116785885977429356}
+  m_Enabled: 1
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_SortAtRoot: 0
+--- !u!114 &5720461023137081859
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6116785885977429356}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b5a4773bf1a7864ebded332def497cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sortPoint: {fileID: 1613233704432169246}
 --- !u!1 &6648382175554530728
 GameObject:
   m_ObjectHideFlags: 0

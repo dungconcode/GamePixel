@@ -5,9 +5,18 @@ using UnityEngine;
 
 public class EnemySmart_Controller : MonoBehaviour
 {
+    public static EnemySmart_Controller Instance;
+    public Enemy_Index enemyIndex;
     private AI_Path aiPath;
     private Transform player;
     private Animator anim;
+
+    public float damageAdd;
+    public float hpAdd;
+    private void Awake()
+    {
+        Instance = this;
+    }
     void Start()
     {
         aiPath = GetComponent<AI_Path>();

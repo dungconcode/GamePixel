@@ -18,6 +18,8 @@ GameObject:
   - component: {fileID: 6754652265206071649}
   - component: {fileID: 3879388250347765120}
   - component: {fileID: 5836837074203371704}
+  - component: {fileID: 3904213746018446504}
+  - component: {fileID: 2232017634386427414}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -40,6 +42,7 @@ Transform:
   m_Children:
   - {fileID: 4043389968927273450}
   - {fileID: 5637692752850783703}
+  - {fileID: 4948682792728976048}
   m_Father: {fileID: 4521322002492382524}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!50 &2203600287643447752
@@ -263,7 +266,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isKnockBack: 0
-  knockBackForce: 10
+--- !u!210 &3904213746018446504
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 160720207466393237}
+  m_Enabled: 1
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_SortAtRoot: 0
+--- !u!114 &2232017634386427414
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 160720207466393237}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b5a4773bf1a7864ebded332def497cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sortPoint: {fileID: 4948682792728976048}
 --- !u!1 &237400439132063912
 GameObject:
   m_ObjectHideFlags: 0
@@ -1689,6 +1716,37 @@ MonoBehaviour:
     cooldownImage: {fileID: 684307733023637966}
     skill: {fileID: 1204221170585421665}
     cooldownTimer: 0
+--- !u!1 &6134315234911223837
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4948682792728976048}
+  m_Layer: 0
+  m_Name: SortPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4948682792728976048
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6134315234911223837}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.485, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7839488205463913987}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6867136934508766400
 GameObject:
   m_ObjectHideFlags: 0

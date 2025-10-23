@@ -14,6 +14,8 @@ GameObject:
   - component: {fileID: 4376312090538134572}
   - component: {fileID: 1144048935575512436}
   - component: {fileID: 7545800967286687639}
+  - component: {fileID: 7419448894246759691}
+  - component: {fileID: -7457391102034826646}
   m_Layer: 0
   m_Name: EnemyWood_Bullet_1
   m_TagString: Untagged
@@ -176,3 +178,28 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.5
+--- !u!210 &7419448894246759691
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3344974651324289699}
+  m_Enabled: 1
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_SortAtRoot: 0
+--- !u!114 &-7457391102034826646
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3344974651324289699}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b5a4773bf1a7864ebded332def497cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sortPoint: {fileID: 0}

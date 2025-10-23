@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2156404212669640140
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5534390895303291338}
+  m_Layer: 6
+  m_Name: SortPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5534390895303291338
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2156404212669640140}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.157, y: -0.698, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4018212543528973164}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4350728867118895854
 GameObject:
   m_ObjectHideFlags: 0
@@ -194,6 +225,8 @@ GameObject:
   - component: {fileID: 1224117405657510803}
   - component: {fileID: 2691419391633472324}
   - component: {fileID: -2677834493942422380}
+  - component: {fileID: -5639137411982446519}
+  - component: {fileID: -7458501868270315231}
   m_Layer: 6
   m_Name: Enemy_Wood_1(Toxic Area Trap)
   m_TagString: Enemy
@@ -216,6 +249,7 @@ Transform:
   m_Children:
   - {fileID: 1560363309102185666}
   - {fileID: 3576368361523590634}
+  - {fileID: 5534390895303291338}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &8207366275600854894
@@ -494,6 +528,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackEffectSOs: []
+  attackDelay: 0.5
+  isDashAttack: 0
+--- !u!210 &-5639137411982446519
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4939774175243776319}
+  m_Enabled: 1
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_SortAtRoot: 0
+--- !u!114 &-7458501868270315231
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4939774175243776319}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b5a4773bf1a7864ebded332def497cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sortPoint: {fileID: 5534390895303291338}
 --- !u!1 &5756618597043847790
 GameObject:
   m_ObjectHideFlags: 0

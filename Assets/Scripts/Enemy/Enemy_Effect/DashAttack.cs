@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
+using UnityEditor.PackageManager.UI;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -12,7 +13,8 @@ public class DashAttack : AttackEffectSO
     [SerializeField] private LayerMask playerLayer;
     public override void ApplyAttack(Transform enemy, Transform player)
     {
-        enemy.GetComponent<MonoBehaviour>().StartCoroutine(DashAttackAction(enemy, player));
+        
+        enemy.GetComponent<MonoBehaviour>().StartCoroutine(DashAction(enemy, player));
     }
     private IEnumerator DashAttackAction(Transform enemy, Transform player)
     {
@@ -36,5 +38,33 @@ public class DashAttack : AttackEffectSO
         agent.speed = 10f;
         aiPath.SetattackRanger(4f);
     }
-    
+    private IEnumerator DashAction(Transform enemy, Transform player)
+    {
+
+        NavMeshAgent agent = enemy.GetComponent<NavMeshAgent>();
+        AI_Path aiPath = enemy.GetComponent<AI_Path>();
+        aiPath.isEnemyAttacking = true;
+        aiPath.isMoving = true;
+        aiPath.attackRange = 0.5f;
+        Vector3 dir = (enemy.position - player.position).normalized;
+        if (agent == null || aiPath.player == null)
+        {
+            aiPath.isEnemyAttacking = false;
+            yield break;
+        }
+        float retreatDistance = 1f;
+        Vector3 retreatPosition = enemy.position + dir * retreatDistance;
+        agent.isStopped = false;
+        agent.speed = 30f;
+        agent.SetDestination(retreatPosition);
+        float t = 0f, timeout = 1f;
+        while (t < timeout && (agent.pathPending))
+        {
+            
+            t += Time.deltaTime;
+            yield return null;
+        }
+        aiPath.isEnemyAttacking = false;
+        
+    }
 }

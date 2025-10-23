@@ -49,3 +49,9 @@ TagManager:
   - name: Tail
     uniqueID: 4235708627
     locked: 0
+  - name: Ground
+    uniqueID: 3557480911
+    locked: 0
+  - name: Character
+    uniqueID: 280142071
+    locked: 0

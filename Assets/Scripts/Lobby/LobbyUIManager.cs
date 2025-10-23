@@ -18,11 +18,17 @@ public class LobbyUIManager : MonoBehaviour
 
     [Header("Player Index Bar")]
     public GameObject index;
+    [SerializeField] private GameObject namePanel;
 
     [Header("Weapon Player Selected")]
     public Sprite[] weaponList;
     [SerializeField] private Image weaponStart;
     [SerializeField] TextMeshProUGUI currentRole;
+
+    [Header("Skill Player Selected")]
+    [SerializeField] private GameObject skillPanel;
+    [SerializeField] private SkillRepository skillRepo;
+    [SerializeField] private SkillButtonUIManager skillUI;
     private void Awake()
     {
         index = GameObject.Find("==INDEX==");
@@ -32,13 +38,21 @@ public class LobbyUIManager : MonoBehaviour
         index.SetActive(false);
         panelIndex.SetActive(false);
         playerIndexPannel.SetActive(false);
+        skillPanel.SetActive(false);
+        namePanel.SetActive(false);
         ResetSelected.gameObject.SetActive(false);
         RectTransform rt = playerIndexPannel.GetComponent<RectTransform>();
         rt.anchoredPosition = new Vector2(-167, -12);
 
+        RectTransform skillrt = skillPanel.GetComponent<RectTransform>();
+        skillrt.anchoredPosition = new Vector2(152, -1);
 
         RectTransform indexrt= index.GetComponent<RectTransform>();
         indexrt.anchoredPosition = new Vector2(50, 100);
+
+        RectTransform namert = namePanel.GetComponent<RectTransform>();
+        namert.anchoredPosition = new Vector2(9, 71);
+
         IndexBar idB = index.GetComponent<IndexBar>();
         idB.enabled = false;
     }
@@ -65,9 +79,16 @@ public class LobbyUIManager : MonoBehaviour
         //Update Panel Index
         panelIndex.SetActive(true);
         playerIndexPannel.SetActive(true);
-        StartCoroutine(ShowpanelIndex());
+        skillPanel.SetActive(true);
+        namePanel.SetActive(true);
+        StartCoroutine(ShowpanelIndex(playerIndexPannel, new Vector2(167, -12)));
+        StartCoroutine(ShowpanelIndex(skillPanel, new Vector2(-152, -1)));
+        StartCoroutine(ShowpanelIndex(namePanel, new Vector2(9, -71)));
+
         playerName.text = characterID.player_Index.characterID;
-        
+
+        var skills = skillRepo.GetSkills(characterID.player_Index.characterID);
+        if (skills != null) skillUI.SetSkills(skills);
 
         UpdateRolePlayer(characterID);
 
@@ -82,7 +103,9 @@ public class LobbyUIManager : MonoBehaviour
     private void HidePlayerIndex()
     {
         panelIndex.SetActive(false);
-        StartCoroutine(HidepanelIndex());
+        StartCoroutine(HidepanelIndex(playerIndexPannel, new Vector2(-167, -12)));
+        StartCoroutine(HidepanelIndex(skillPanel, new Vector2(152, -1)));
+        StartCoroutine(HidepanelIndex(namePanel, new Vector2(9, 90)));
         ResetSelected.gameObject.SetActive(false);
     }
 
@@ -90,34 +113,34 @@ public class LobbyUIManager : MonoBehaviour
     private void HidePlayerIndexOnStartGame()
     {
         panelIndex.SetActive(false);
-        StartCoroutine(HidepanelIndex());
+        StartCoroutine(HidepanelIndex(playerIndexPannel, new Vector2(-167, -12)));
+        StartCoroutine(HidepanelIndex(skillPanel, new Vector2(152, -1)));
+        StartCoroutine(HidepanelIndex(namePanel, new Vector2(9, 90)));
         ResetSelected.gameObject.SetActive(true);
         StartCoroutine(ShowIndexPlayer());
     }
 
 
-    IEnumerator ShowpanelIndex()
+    IEnumerator ShowpanelIndex(GameObject panel, Vector2 targetPos)
     {
-        RectTransform rt = playerIndexPannel.GetComponent<RectTransform>();
-        Vector2 target = new Vector2(167, -12);
-        while (Vector2.Distance(rt.anchoredPosition, target) > 0.1f)
+        RectTransform rt = panel.GetComponent<RectTransform>();
+        while (Vector2.Distance(rt.anchoredPosition, targetPos) > 0.1f)
         {
             rt.anchoredPosition = Vector2.MoveTowards(
                 rt.anchoredPosition,
-                target,
+                targetPos,
                 1000 * Time.deltaTime
             );
             yield return null;
         }
-        rt.anchoredPosition = target;
+        rt.anchoredPosition = targetPos;
         
     }
 
 
-    IEnumerator HidepanelIndex()
+    IEnumerator HidepanelIndex(GameObject panel, Vector2 target)
     {
-        RectTransform rt = playerIndexPannel.GetComponent<RectTransform>();
-        Vector2 target = new Vector2(-167, -12);
+        RectTransform rt = panel.GetComponent<RectTransform>();
         while (Vector2.Distance(rt.anchoredPosition, target) > 0.1f)
         {
             rt.anchoredPosition = Vector2.MoveTowards(

@@ -32,7 +32,7 @@ public class AI_Path : MonoBehaviour, IEnemyTick
     public bool isFrozen = false;
 
     [Header("Attack Settings")]
-    [SerializeField] private float attackRange = 0.5f;  
+    public float attackRange = 0.5f;  
     [SerializeField] private float attackCooldown = 1f; 
     private float lastAttackTime = 0f;
     public bool isEnemyAttacking = false;
@@ -72,7 +72,7 @@ public class AI_Path : MonoBehaviour, IEnemyTick
             agent.isStopped = false; // cho phép skill điều khiển agent
             return;
         }
-        Enemy_Patrol patrol = GetComponent<Enemy_Patrol>();
+            Enemy_Patrol patrol = GetComponent<Enemy_Patrol>();
         if (player == null || !patrol.isEnemyInRoom)
         {
             agent.ResetPath(); // đứng yên
@@ -101,10 +101,9 @@ public class AI_Path : MonoBehaviour, IEnemyTick
                 {
                     RaycastHit2D hit = Physics2D.Raycast(transform.position, dirToPlayer, 0.5f, obstructionMask);
                     Enemy_Patrol patrol = GetComponent<Enemy_Patrol>();
-                    if(patrol.isEnemyInRoom && enemyAttack != null)
+                    if(patrol.isEnemyInRoom && enemyAttack != null && hit.collider == null)
                     {
                         enemyAttack.TryAttack();
-                        //Debug.Log(isEnemyAttacking);
                         lastAttackTime = Time.time;
                     }
                        

@@ -5,10 +5,16 @@ using UnityEngine.AI;
 
 public class Enemy_Moving : MonoBehaviour,IEnemyTick
 {
+    public static Enemy_Moving instance;
+    [SerializeField] Enemy_Index enemyIndex;
     private AI_Path aiPath;
     private Transform player;
     private Animator anim;
     [SerializeField] private Animator weaponAnim;
+    private void Awake()
+    {
+        instance = this;
+    }
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player")?.transform;
