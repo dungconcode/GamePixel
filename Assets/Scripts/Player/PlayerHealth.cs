@@ -78,7 +78,8 @@ public class PlayerHealth : MonoBehaviour
             if (currentHealth <= 0)
             {
                 currentHealth = 0;
-                gameObject.SetActive(false);
+                //gameObject.SetActive(false);
+                Player_Controller.Instance.transform.position=  RespawnController.Instance.respawnPoint.position;
                 Destroy(gameObject, 0.1f);
                 return;
             }
