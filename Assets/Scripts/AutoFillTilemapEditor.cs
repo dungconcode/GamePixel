@@ -3,7 +3,6 @@ using UnityEngine;
 using UnityEditor;
 using UnityEngine.Tilemaps;
 
-[InitializeOnLoad]
 public static class AutoFillTilemapEditor
 {
     

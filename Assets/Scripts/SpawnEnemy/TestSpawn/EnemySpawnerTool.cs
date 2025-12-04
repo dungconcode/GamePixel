@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿#if UNITY_EDITOR
+using UnityEngine;
 using UnityEditor;
 using UnityEngine.Rendering;
 
@@ -64,3 +65,4 @@ public class EnemySpawnerTool : EditorWindow
         EditorGUILayout.EndScrollView();
     }
 }
+#endif

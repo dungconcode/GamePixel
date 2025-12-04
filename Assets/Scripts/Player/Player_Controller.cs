@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEditor.Tilemaps;
+using UnityEngine.Tilemaps;
 using UnityEngine;
 
 public class Player_Controller : MonoBehaviour
@@ -54,8 +54,8 @@ public class Player_Controller : MonoBehaviour
             {
                 directionPlayer = inputDir.normalized;
             }
-            horizontal = joystick.Horizontal;
-            vertical = joystick.Vertical;
+            //horizontal = joystick.Horizontal;
+            //vertical = joystick.Vertical;
             Animation();
             Collider2D[] enemies = Physics2D.OverlapCircleAll(
                 transform.position,
