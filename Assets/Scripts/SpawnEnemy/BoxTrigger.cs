@@ -13,6 +13,14 @@ public class BoxTrigger : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             isPlayerInside = true;
+
+            // CHỐT: luôn check Instance trước
+            if (TestEnemySpawn.Instance == null)
+            {
+                Debug.LogWarning("[BoxTrigger] TestEnemySpawn.Instance == null khi Player vào phòng");
+                return;
+            }
+
             var area = TestEnemySpawn.Instance.spawnAreas.Find(a => a.areaName == targetAreaName);
             if (area != null && isPlayerInside)
             {
@@ -38,6 +46,13 @@ public class BoxTrigger : MonoBehaviour
         if (collision.gameObject.CompareTag("Player"))
         {
             isPlayerInside = false;
+
+            if (TestEnemySpawn.Instance == null)
+            {
+                Debug.LogWarning("[BoxTrigger] TestEnemySpawn.Instance == null khi Player rời phòng");
+                return;
+            }
+
             var area = TestEnemySpawn.Instance.spawnAreas.Find(a => a.areaName == targetAreaName);
             if (area != null && !isPlayerInside)
             {

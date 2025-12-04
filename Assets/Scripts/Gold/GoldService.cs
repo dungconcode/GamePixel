@@ -25,7 +25,7 @@ public class GoldService : MonoBehaviour
             return;
         }
         Instance = this;
-        DontDestroyOnLoad(gameObject);
+        //DontDestroyOnLoad(gameObject);
         Load();
         OnGoldChanged?.Invoke(TotalGold);
     }

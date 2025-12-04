@@ -15,8 +15,24 @@ public class TestEnemySpawn : MonoBehaviour
     private readonly Dictionary<SpawnAreaData, Coroutine> _clearJobs = new();
     private void Awake()
     {
-        if (Instance == null) Instance = this;
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else if (Instance != this)
+        {
+            Destroy(gameObject);   // tránh có 2 spawner
+        }
     }
+
+    private void OnDestroy()
+    {
+        if (Instance == this)
+        {
+            Instance = null;
+        }
+    }
+
 
     //public void StartSpawnEnemy()
     //{

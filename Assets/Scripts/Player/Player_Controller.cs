@@ -54,8 +54,8 @@ public class Player_Controller : MonoBehaviour
             {
                 directionPlayer = inputDir.normalized;
             }
-            //horizontal = joystick.Horizontal;
-            //vertical = joystick.Vertical;
+            horizontal = joystick.Horizontal;
+            vertical = joystick.Vertical;
             Animation();
             Collider2D[] enemies = Physics2D.OverlapCircleAll(
                 transform.position,
